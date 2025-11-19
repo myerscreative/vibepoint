@@ -10,7 +10,7 @@ An intelligent mood tracking and emotion coaching application that helps you und
 - **History View**: Browse and review all your past mood entries with sentiment visualization
 - **Pattern Analysis**: Unlock insights after 10+ entries to discover what affects your mood
 
-### Emotion Coaching (NEW ✨)
+### Emotion Coaching ✨
 - **Real-Time Sentiment Analysis**: Automatically analyzes the sentiment of your responses (-5 to +5 scale)
 - **Cognitive Distortion Detection**: Identifies unhelpful thought patterns in your self-talk (e.g., all-or-nothing thinking, catastrophizing, should statements)
 - **Live Coaching Suggestions**: Get personalized reframing tips as you log your mood
@@ -22,7 +22,18 @@ An intelligent mood tracking and emotion coaching application that helps you und
   - Track emotional trajectory (improving/declining/stable)
   - Get personalized action items for wellbeing
 
+### Data Visualization 📊
+- **Interactive Graphs**: Visualize your emotional journey with beautiful, interactive charts
+- **Time Period Filters**: View data by day, week, month, 3 months, year, or all time
+- **Mood Timeline**: Track happiness and motivation trends over time
+- **Sentiment Charts**: Visualize overall sentiment and self-talk patterns
+- **Daily Aggregates**: See average moods grouped by day for clearer trends
+- **Focus Area Breakdown**: Understand which topics you think about most
+- **Summary Statistics**: Quick stats including averages, ranges, and volatility
+- **Graph Insights**: Automatic analysis of your data patterns
+
 ### Progressive Features
+- **2+ Entries**: Unlock interactive graphs and visualizations
 - **10+ Entries**: Unlock basic pattern analysis and focus area insights
 - **20+ Entries**: Unlock advanced coaching insights and sentiment trend analysis
 - **Adaptive Coaching**: The more you log, the smarter the coaching becomes
@@ -34,6 +45,7 @@ An intelligent mood tracking and emotion coaching application that helps you und
 - **Styling**: Tailwind CSS
 - **Authentication & Database**: Supabase
 - **Sentiment Analysis**: Sentiment.js
+- **Data Visualization**: Recharts
 - **Animations**: Framer Motion
 - **Date Handling**: date-fns
 

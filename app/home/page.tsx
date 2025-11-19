@@ -92,6 +92,22 @@ export default function HomePage() {
               View History
             </Link>
 
+            {totalEntries >= 2 ? (
+              <Link
+                href="/graphs"
+                className="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 px-6 rounded-xl transition-smooth focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 text-center text-lg"
+              >
+                View Graphs 📊
+              </Link>
+            ) : (
+              <div className="block w-full bg-gray-100 text-gray-400 font-semibold py-5 px-6 rounded-xl text-center text-lg cursor-not-allowed">
+                <div>View Graphs 📊</div>
+                <div className="text-xs mt-1">
+                  Log {2 - totalEntries} more mood{2 - totalEntries !== 1 ? 's' : ''} to unlock
+                </div>
+              </div>
+            )}
+
             {canViewPatterns ? (
               <Link
                 href="/patterns"
