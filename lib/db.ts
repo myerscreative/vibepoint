@@ -95,10 +95,15 @@ export async function setOnboardingCompleted(): Promise<void> {
 
   if (!user) return;
 
-  await supabase
+  const { error } = await supabase
     .from('user_preferences')
     .upsert({
       user_id: user.id,
       onboarding_completed: true,
     });
+
+  if (error) {
+    console.error('Error setting onboarding completed:', error);
+    throw error;
+  }
 }

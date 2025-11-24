@@ -17,12 +17,22 @@ export default function OnboardingPage() {
   };
 
   const handleSkip = async () => {
-    await setOnboardingCompleted();
+    try {
+      await setOnboardingCompleted();
+    } catch (error) {
+      console.error('Error completing onboarding:', error);
+      // Continue anyway - don't block navigation
+    }
     router.push('/home');
   };
 
   const handleComplete = async () => {
-    await setOnboardingCompleted();
+    try {
+      await setOnboardingCompleted();
+    } catch (error) {
+      console.error('Error completing onboarding:', error);
+      // Continue anyway - don't block navigation
+    }
     router.push('/home');
   };
 
