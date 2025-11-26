@@ -71,13 +71,106 @@ export function analyzePatterns(entries: MoodEntry[]): UserStats {
   };
 }
 
+/**
+ * Generate simple, encouraging insights for new users (3-9 entries)
+ */
+function generateEarlyInsights(
+  entries: MoodEntry[],
+  focusAreas: FocusPattern[]
+): Insight[] {
+  const insights: Insight[] = [];
+
+  // Calculate basic averages
+  const avgHappiness =
+    entries.reduce((sum, e) => sum + (100 - e.mood_y), 0) / entries.length;
+  const avgMotivation =
+    entries.reduce((sum, e) => sum + e.mood_x, 0) / entries.length;
+
+  // Insight 1: Most common time of day (if timestamps vary)
+  const morningEntries = entries.filter((e) => {
+    const hour = new Date(e.created_at).getHours();
+    return hour >= 6 && hour < 12;
+  });
+
+  const afternoonEntries = entries.filter((e) => {
+    const hour = new Date(e.created_at).getHours();
+    return hour >= 12 && hour < 18;
+  });
+
+  const eveningEntries = entries.filter((e) => {
+    const hour = new Date(e.created_at).getHours();
+    return hour >= 18 || hour < 6;
+  });
+
+  const timeOfDay =
+    morningEntries.length > afternoonEntries.length &&
+    morningEntries.length > eveningEntries.length
+      ? 'morning'
+      : afternoonEntries.length > eveningEntries.length
+      ? 'afternoon'
+      : 'evening';
+
+  if (morningEntries.length > 0 || afternoonEntries.length > 0 || eveningEntries.length > 0) {
+    insights.push({
+      type: 'neutral',
+      title: 'You\'re Building a Habit',
+      description: `You tend to log your moods in the ${timeOfDay}. Consistency helps you spot patterns faster!`,
+    });
+  }
+
+  // Insight 2: Average mood
+  const moodLevel =
+    avgHappiness > 65
+      ? 'generally happy'
+      : avgHappiness > 40
+      ? 'moderately content'
+      : 'working through some challenges';
+
+  const motivationLevel =
+    avgMotivation > 65
+      ? 'highly motivated'
+      : avgMotivation > 40
+      ? 'steadily motivated'
+      : 'building momentum';
+
+  insights.push({
+    type: avgHappiness > 50 ? 'positive' : 'neutral',
+    title: 'Your Baseline Emerges',
+    description: `So far, you've been ${moodLevel} and ${motivationLevel}. These early entries give you a starting point to measure progress.`,
+  });
+
+  // Insight 3: Focus area (if there is one with 2+ entries)
+  if (focusAreas.length > 0 && focusAreas[0].count >= 2) {
+    insights.push({
+      type: 'neutral',
+      title: 'Common Focus Spotted',
+      description: `"${focusAreas[0].focus}" appears in ${focusAreas[0].count} of your entries. As you log more, we'll discover how this affects your mood.`,
+    });
+  }
+
+  // Insight 4: Encouragement to continue
+  insights.push({
+    type: 'coaching',
+    title: 'Keep Going!',
+    description: `You're ${10 - entries.length} entries away from unlocking deeper pattern analysis. The more you log, the smarter Vibepoint gets at helping you.`,
+    suggestion: 'Try logging once a day to build the habit.',
+  });
+
+  return insights.slice(0, 3); // Show 2-3 early insights
+}
+
 function generateInsights(
   entries: MoodEntry[],
   focusAreas: FocusPattern[]
 ): Insight[] {
   const insights: Insight[] = [];
 
-  // Not enough data for insights
+  // Early insights (3-5 entries) - Simple observations
+  if (entries.length >= 3 && entries.length < 10) {
+    return generateEarlyInsights(entries, focusAreas);
+  }
+
+  // Not enough data for detailed insights
   if (entries.length < 10) {
     return insights;
   }
