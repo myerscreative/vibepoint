@@ -14,6 +14,9 @@ export default function PatternsPage() {
   const [entries, setEntries] = useState<MoodEntry[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [error, setError] = useState('');
+  const [aiInsights, setAiInsights] = useState<Array<{ type: string; insight: string }> | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,6 +45,32 @@ export default function PatternsPage() {
 
     loadData();
   }, [router]);
+
+  const handleGetAIInsights = async () => {
+    setAiLoading(true);
+    setAiError('');
+
+    try {
+      const response = await fetch('/api/ai/analyze-patterns', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate insights');
+      }
+
+      setAiInsights(data.insights);
+    } catch (err: any) {
+      setAiError(err.message || 'Failed to generate AI insights');
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -243,6 +272,89 @@ export default function PatternsPage() {
               ))}
             </div>
           )}
+
+          {/* AI-Powered Insights (Pro Feature) */}
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
+                  <span>AI-Powered Insights</span>
+                  <span className="text-xs bg-gradient-to-r from-purple-600 to-pink-600 text-white px-2 py-1 rounded-full font-medium">
+                    PRO
+                  </span>
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  Get personalized coaching insights powered by AI
+                </p>
+              </div>
+            </div>
+
+            {!aiInsights && !aiLoading && (
+              <button
+                onClick={handleGetAIInsights}
+                disabled={aiLoading}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-medium hover:from-purple-700 hover:to-pink-700 transition-smooth disabled:opacity-50"
+              >
+                ✨ Generate AI Insights
+              </button>
+            )}
+
+            {aiLoading && (
+              <div className="text-center py-8">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-200 border-t-purple-600"></div>
+                <p className="text-sm text-gray-600 mt-3">AI is analyzing your patterns...</p>
+              </div>
+            )}
+
+            {aiError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                {aiError}
+              </div>
+            )}
+
+            {aiInsights && (
+              <div className="space-y-4">
+                {aiInsights.map((insight, index) => (
+                  <div
+                    key={index}
+                    className={`bg-white bg-opacity-80 rounded-xl p-5 shadow-sm ${
+                      insight.type === 'discovery'
+                        ? 'border-l-4 border-purple-500'
+                        : insight.type === 'pattern'
+                        ? 'border-l-4 border-blue-500'
+                        : insight.type === 'suggestion'
+                        ? 'border-l-4 border-green-500'
+                        : insight.type === 'warning'
+                        ? 'border-l-4 border-orange-500'
+                        : 'border-l-4 border-pink-500'
+                    }`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="text-2xl">
+                        {insight.type === 'discovery' ? '🔍' :
+                         insight.type === 'pattern' ? '📊' :
+                         insight.type === 'suggestion' ? '💡' :
+                         insight.type === 'warning' ? '⚠️' : '🎯'}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-medium text-gray-500 uppercase mb-1">
+                          {insight.type}
+                        </p>
+                        <p className="text-gray-800 leading-relaxed">{insight.insight}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={handleGetAIInsights}
+                  disabled={aiLoading}
+                  className="w-full text-purple-600 hover:text-purple-700 font-medium text-sm py-2 transition-smooth"
+                >
+                  🔄 Regenerate Insights
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Not enough data for advanced insights */}
           {stats.totalEntries < 20 && (
