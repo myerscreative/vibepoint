@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Recipe } from '@/types';
 
-// Sample recipe for prototype
+// Sample recipe for prototype/demo
 const sampleRecipe = {
+  id: 'sample',
   title: "Your Confidence Recipe",
-  targetEmotion: "confident",
+  target_emotion: "confident",
   duration: "60 seconds",
   steps: [
     {
@@ -29,18 +31,60 @@ const sampleRecipe = {
       duration: 20,
     },
   ],
-  whyThisWorks: "Your past entries show that confidence appears when you're breathing deeply, standing tall, and focusing on your preparation rather than outcomes.",
+  why_this_works: "Your past entries show that confidence appears when you're breathing deeply, standing tall, and focusing on your preparation rather than outcomes.",
 };
 
 export default function RecipePlayerPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const recipeId = searchParams?.get('id');
+
+  const [loading, setLoading] = useState(!!recipeId);
+  const [recipe, setRecipe] = useState<Recipe | typeof sampleRecipe | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [error, setError] = useState('');
 
-  const currentStepData = sampleRecipe.steps[currentStep];
-  const totalSteps = sampleRecipe.steps.length;
+  useEffect(() => {
+    if (recipeId && recipeId !== 'sample') {
+      loadRecipe();
+    } else {
+      setRecipe(sampleRecipe);
+      setLoading(false);
+    }
+  }, [recipeId]);
+
+  const loadRecipe = async () => {
+    try {
+      const response = await fetch(`/api/recipes/${recipeId}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setRecipe(data.recipe);
+        // Track that recipe was used
+        await fetch(`/api/recipes/${recipeId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'use' }),
+        });
+      } else {
+        setError(data.error || 'Failed to load recipe');
+        // Fallback to sample
+        setRecipe(sampleRecipe);
+      }
+    } catch (err) {
+      console.error('Failed to load recipe:', err);
+      setError('Failed to load recipe');
+      setRecipe(sampleRecipe);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const currentStepData = recipe?.steps[currentStep];
+  const totalSteps = recipe?.steps.length || 0;
 
   useEffect(() => {
     if (isPlaying && timeLeft > 0) {
@@ -53,16 +97,17 @@ export default function RecipePlayerPage() {
       // Move to next step
       if (currentStep < totalSteps - 1) {
         setCurrentStep(currentStep + 1);
-        setTimeLeft(sampleRecipe.steps[currentStep + 1].duration);
+        setTimeLeft(recipe!.steps[currentStep + 1].duration);
       } else {
         // Recipe complete!
         setIsPlaying(false);
         setIsComplete(true);
       }
     }
-  }, [isPlaying, timeLeft, currentStep, totalSteps]);
+  }, [isPlaying, timeLeft, currentStep, totalSteps, recipe]);
 
   const handleStart = () => {
+    if (!currentStepData) return;
     setIsPlaying(true);
     setTimeLeft(currentStepData.duration);
   };
@@ -79,20 +124,47 @@ export default function RecipePlayerPage() {
   };
 
   const handleNext = () => {
+    if (!recipe) return;
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
-      setTimeLeft(sampleRecipe.steps[currentStep + 1].duration);
+      setTimeLeft(recipe.steps[currentStep + 1].duration);
       setIsPlaying(false);
     }
   };
 
   const handlePrevious = () => {
+    if (!recipe) return;
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
-      setTimeLeft(sampleRecipe.steps[currentStep - 1].duration);
+      setTimeLeft(recipe.steps[currentStep - 1].duration);
       setIsPlaying(false);
     }
   };
+
+  if (loading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="text-lg text-gray-700">Loading recipe...</div>
+      </main>
+    );
+  }
+
+  if (!recipe) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="text-center">
+          <div className="text-5xl mb-4">😕</div>
+          <p className="text-gray-700 mb-4">Recipe not found</p>
+          <Link
+            href="/recipes"
+            className="text-purple-600 hover:text-purple-700 font-medium"
+          >
+            ← Back to Recipes
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-6">
@@ -100,21 +172,28 @@ export default function RecipePlayerPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{sampleRecipe.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{recipe.title}</h1>
             <p className="text-purple-600 font-medium mt-1">
-              {sampleRecipe.duration} • {totalSteps} steps
+              {recipe.duration} • {totalSteps} steps
               <span className="ml-2 text-xs bg-purple-600 text-white px-2 py-1 rounded-full">
                 PRO
               </span>
             </p>
           </div>
           <Link
-            href="/patterns"
+            href={recipeId && recipeId !== 'sample' ? '/recipes' : '/patterns'}
             className="text-gray-600 hover:text-gray-900 transition-smooth"
           >
             ✕
           </Link>
         </div>
+
+        {/* Error message */}
+        {error && (
+          <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg mb-6 text-sm">
+            {error} (Showing demo recipe)
+          </div>
+        )}
 
         {!isComplete ? (
           <>
@@ -122,7 +201,7 @@ export default function RecipePlayerPage() {
             <div className="mb-8">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Step {currentStep + 1} of {totalSteps}</span>
-                <span>{currentStepData.focus}</span>
+                <span>{currentStepData?.focus}</span>
               </div>
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
@@ -148,20 +227,22 @@ export default function RecipePlayerPage() {
                       fill="none"
                     />
                     {/* Progress circle */}
-                    <circle
-                      cx="96"
-                      cy="96"
-                      r="88"
-                      stroke="url(#gradient)"
-                      strokeWidth="8"
-                      fill="none"
-                      strokeDasharray={`${2 * Math.PI * 88}`}
-                      strokeDashoffset={`${
-                        2 * Math.PI * 88 * (1 - (currentStepData.duration - timeLeft) / currentStepData.duration)
-                      }`}
-                      className="transition-all duration-1000"
-                      strokeLinecap="round"
-                    />
+                    {currentStepData && (
+                      <circle
+                        cx="96"
+                        cy="96"
+                        r="88"
+                        stroke="url(#gradient)"
+                        strokeWidth="8"
+                        fill="none"
+                        strokeDasharray={`${2 * Math.PI * 88}`}
+                        strokeDashoffset={`${
+                          2 * Math.PI * 88 * (1 - (currentStepData.duration - timeLeft) / currentStepData.duration)
+                        }`}
+                        className="transition-all duration-1000"
+                        strokeLinecap="round"
+                      />
+                    )}
                     <defs>
                       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#9333EA" />
@@ -173,7 +254,7 @@ export default function RecipePlayerPage() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
                       <div className="text-5xl font-bold text-gray-900">
-                        {isPlaying ? timeLeft : currentStepData.duration}
+                        {isPlaying ? timeLeft : currentStepData?.duration}
                       </div>
                       <div className="text-sm text-gray-500 mt-1">seconds</div>
                     </div>
@@ -184,10 +265,10 @@ export default function RecipePlayerPage() {
               {/* Instruction */}
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  {currentStepData.focus}
+                  {currentStepData?.focus}
                 </h2>
                 <p className="text-lg text-gray-700 leading-relaxed max-w-lg mx-auto">
-                  {currentStepData.instruction}
+                  {currentStepData?.instruction}
                 </p>
               </div>
 
@@ -233,7 +314,7 @@ export default function RecipePlayerPage() {
                 💡 Why this works for you
               </h3>
               <p className="text-purple-800 text-sm">
-                {sampleRecipe.whyThisWorks}
+                {recipe.why_this_works}
               </p>
             </div>
           </>
@@ -264,10 +345,10 @@ export default function RecipePlayerPage() {
               </button>
 
               <Link
-                href="/patterns"
+                href={recipeId && recipeId !== 'sample' ? '/recipes' : '/patterns'}
                 className="block w-full text-purple-600 hover:text-purple-700 font-medium transition-smooth"
               >
-                Back to Patterns
+                Back to {recipeId && recipeId !== 'sample' ? 'Recipes' : 'Patterns'}
               </Link>
             </div>
           </div>
@@ -276,7 +357,7 @@ export default function RecipePlayerPage() {
         {/* Note about Pro feature */}
         <div className="mt-6 text-center text-sm text-gray-600">
           <p>
-            ✨ This is a <strong>Vibepoint Pro</strong> feature prototype
+            ✨ This is a <strong>Vibepoint Pro</strong> feature
           </p>
           <p className="mt-1">
             Recipes are generated from your personal data patterns

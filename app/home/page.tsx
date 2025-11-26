@@ -206,6 +206,14 @@ export default function HomePage() {
                 </div>
               </div>
             )}
+
+            <Link
+              href="/recipes"
+              className="block w-full bg-gradient-to-r from-pink-600 to-orange-600 hover:from-pink-700 hover:to-orange-700 text-white font-semibold py-5 px-6 rounded-xl transition-smooth focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 text-center text-lg flex items-center justify-center space-x-2"
+            >
+              <span>My Recipes</span>
+              <span className="text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">PRO</span>
+            </Link>
           </div>
 
           {/* Quick stats */}
