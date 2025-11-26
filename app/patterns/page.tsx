@@ -30,7 +30,7 @@ export default function PatternsPage() {
       if (fetchError) {
         setError('Failed to load mood data');
       } else if (data) {
-        if (data.length < 10) {
+        if (data.length < 3) {
           router.push('/home');
           return;
         }

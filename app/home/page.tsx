@@ -27,7 +27,7 @@ export default function HomePage() {
       const { data } = await getMoodEntries();
       if (data) {
         setTotalEntries(data.length);
-        setCanViewPatterns(data.length >= 10);
+        setCanViewPatterns(data.length >= 3); // Lowered from 10 to 3
 
         // Count entries this week
         const weekStart = startOfWeek(new Date());
@@ -120,7 +120,7 @@ export default function HomePage() {
               <div className="block w-full bg-gray-100 text-gray-400 font-semibold py-5 px-6 rounded-xl text-center text-lg cursor-not-allowed">
                 <div>See Patterns</div>
                 <div className="text-xs mt-1">
-                  Log {10 - totalEntries} more mood{10 - totalEntries !== 1 ? 's' : ''} to unlock
+                  Log {3 - totalEntries} more mood{3 - totalEntries !== 1 ? 's' : ''} to unlock
                 </div>
               </div>
             )}
@@ -150,10 +150,18 @@ export default function HomePage() {
           </div>
         )}
 
-        {totalEntries > 0 && totalEntries < 10 && (
+        {totalEntries > 0 && totalEntries < 3 && (
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">
             <p className="text-sm text-purple-900">
-              ✨ You&apos;re {10 - totalEntries} mood{10 - totalEntries !== 1 ? 's' : ''} away from unlocking pattern insights!
+              ✨ You&apos;re {3 - totalEntries} mood{3 - totalEntries !== 1 ? 's' : ''} away from unlocking your first insights!
+            </p>
+          </div>
+        )}
+
+        {totalEntries >= 3 && totalEntries < 10 && (
+          <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+            <p className="text-sm text-green-900">
+              🎉 Great start! Log {10 - totalEntries} more to unlock deeper pattern analysis.
             </p>
           </div>
         )}

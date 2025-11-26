@@ -28,103 +28,144 @@ export default function OnboardingPage() {
 
   const slides = [
     {
-      title: "Tap the gradient",
-      description: "Express your mood by tapping anywhere on the colorful gradient. Your position shows how happy and motivated you feel.",
+      title: "Every mood has 3 controllable inputs",
+      description: "Focus, self-talk, and body. Change these, and you change how you feel.",
       visual: (
-        <div className="relative w-64 h-64 mx-auto rounded-3xl overflow-hidden mood-gradient shadow-2xl">
-          {/* Example tap indicator */}
-          <div className="absolute top-1/3 right-1/3 w-12 h-12 bg-white bg-opacity-50 rounded-full flex items-center justify-center animate-pulse">
-            <div className="w-6 h-6 bg-white rounded-full"></div>
-          </div>
-
-          {/* Axis labels */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-3 py-1 bg-black bg-opacity-30 rounded-full">
-            Happy
-          </div>
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-3 py-1 bg-black bg-opacity-30 rounded-full">
-            Unhappy
-          </div>
-          <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-3 py-1 bg-black bg-opacity-30 rounded-full">
-            Unmotivated
-          </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-3 py-1 bg-black bg-opacity-30 rounded-full">
-            Motivated
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Answer 3 questions",
-      description: "Share quick insights about what you're focusing on, what you're telling yourself, and what you notice in your body.",
-      visual: (
-        <div className="space-y-4 max-w-sm mx-auto">
-          <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-blue-200">
-            <p className="text-sm text-gray-600 mb-2">Question 1</p>
-            <p className="font-medium text-gray-900">What are you focusing on?</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Work</span>
-              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Exercise</span>
-              <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Family</span>
+        <div className="max-w-md mx-auto space-y-6">
+          {/* Three inputs visualization */}
+          <div className="bg-gradient-to-r from-blue-100 to-blue-50 rounded-2xl p-6 border-2 border-blue-300">
+            <div className="flex items-center space-x-3">
+              <div className="text-3xl">🎯</div>
+              <div>
+                <h3 className="font-semibold text-blue-900">1. What you focus on</h3>
+                <p className="text-sm text-blue-700">Where your attention goes</p>
+              </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg opacity-60">
-            <p className="text-sm text-gray-600 mb-2">Question 2</p>
-            <p className="font-medium text-gray-900">What are you telling yourself?</p>
+          <div className="bg-gradient-to-r from-purple-100 to-purple-50 rounded-2xl p-6 border-2 border-purple-300">
+            <div className="flex items-center space-x-3">
+              <div className="text-3xl">💭</div>
+              <div>
+                <h3 className="font-semibold text-purple-900">2. What you tell yourself</h3>
+                <p className="text-sm text-purple-700">Your inner voice</p>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg opacity-30">
-            <p className="text-sm text-gray-600 mb-2">Question 3</p>
-            <p className="font-medium text-gray-900">What do you notice in your body?</p>
+          <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-2xl p-6 border-2 border-green-300">
+            <div className="flex items-center space-x-3">
+              <div className="text-3xl">🧘</div>
+              <div>
+                <h3 className="font-semibold text-green-900">3. What your body is doing</h3>
+                <p className="text-sm text-green-700">Posture, breathing, tension</p>
+              </div>
+            </div>
           </div>
         </div>
       ),
     },
     {
-      title: "Discover your patterns",
-      description: "After logging 10 moods, you'll unlock insights about what affects your happiness and motivation.",
+      title: "From anxious → calm in 60 seconds",
+      description: "Here's how it works. You control all three inputs.",
       visual: (
-        <div className="max-w-sm mx-auto space-y-4">
-          {/* Mock insight card */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 shadow-lg border border-blue-200">
-            <div className="text-3xl mb-2">💡</div>
-            <h3 className="font-semibold text-gray-900 mb-2">Insight</h3>
-            <p className="text-sm text-gray-700">
-              When you focus on &quot;exercise&quot; your happiness is typically 30% higher than average
+        <div className="max-w-md mx-auto space-y-6">
+          {/* Before state */}
+          <div className="bg-red-50 rounded-2xl p-6 border-2 border-red-200">
+            <div className="text-center mb-4">
+              <span className="text-2xl">😰</span>
+              <p className="font-semibold text-red-900 mt-2">Feeling Anxious</p>
+            </div>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-start space-x-2">
+                <span>🎯</span>
+                <span className="text-red-800">Focusing on: <em>"Everything that could go wrong"</em></span>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span>💭</span>
+                <span className="text-red-800">Telling yourself: <em>"I can't handle this"</em></span>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span>🧘</span>
+                <span className="text-red-800">Body: <em>Shallow breathing, tight shoulders</em></span>
+              </div>
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div className="text-center">
+            <div className="text-4xl">↓</div>
+            <p className="text-xs text-gray-600 font-medium mt-1">Shift all three</p>
+          </div>
+
+          {/* After state */}
+          <div className="bg-green-50 rounded-2xl p-6 border-2 border-green-200">
+            <div className="text-center mb-4">
+              <span className="text-2xl">😌</span>
+              <p className="font-semibold text-green-900 mt-2">Feeling Calm</p>
+            </div>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-start space-x-2">
+                <span>🎯</span>
+                <span className="text-green-800">Focusing on: <em>"What I can control right now"</em></span>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span>💭</span>
+                <span className="text-green-800">Telling yourself: <em>"One step at a time"</em></span>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span>🧘</span>
+                <span className="text-green-800">Body: <em>Deep breaths, shoulders relaxed</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Track your 3 inputs daily",
+      description: "Tap the gradient, answer 3 questions. Vibepoint learns your personal patterns and shows you what works.",
+      visual: (
+        <div className="max-w-md mx-auto space-y-6">
+          {/* Gradient preview */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden mood-gradient shadow-xl border-2 border-blue-300">
+            <div className="absolute top-1/3 right-1/3 w-10 h-10 bg-white bg-opacity-60 rounded-full flex items-center justify-center animate-pulse">
+              <div className="w-5 h-5 bg-white rounded-full"></div>
+            </div>
+
+            {/* Axis labels */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
+              Happy
+            </div>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
+              Unhappy
+            </div>
+            <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
+              Unmotivated
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
+              Motivated
+            </div>
+          </div>
+
+          {/* Three questions preview */}
+          <div className="space-y-3">
+            <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+              <p className="text-sm font-medium text-blue-900">🎯 What are you focusing on?</p>
+            </div>
+            <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+              <p className="text-sm font-medium text-purple-900">💭 What are you telling yourself?</p>
+            </div>
+            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+              <p className="text-sm font-medium text-green-900">🧘 What sensations are you feeling in your body?</p>
+            </div>
+          </div>
+
+          {/* Value proposition */}
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-4 border border-yellow-200">
+            <p className="text-sm text-center text-gray-800">
+              <span className="font-semibold">After just 3 entries,</span> you'll start seeing what patterns help you feel better.
             </p>
-          </div>
-
-          {/* Mock pattern visualization */}
-          <div className="bg-white rounded-xl p-6 shadow-lg">
-            <h3 className="font-semibold text-gray-900 mb-3">Top Focus Areas</h3>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">Work projects</span>
-                <div className="flex space-x-1">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div
-                      key={i}
-                      className={`w-3 h-3 rounded-full ${
-                        i <= 3 ? 'bg-blue-500' : 'bg-gray-200'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">Exercise</span>
-                <div className="flex space-x-1">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div
-                      key={i}
-                      className={`w-3 h-3 rounded-full ${
-                        i <= 5 ? 'bg-green-500' : 'bg-gray-200'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       ),
@@ -182,7 +223,7 @@ export default function OnboardingPage() {
             onClick={handleNext}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-smooth focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {currentSlide < 2 ? 'Next' : 'Get Started'}
+            {currentSlide < 2 ? 'Next' : 'Start Tracking'}
           </button>
         </div>
       </div>
