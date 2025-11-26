@@ -62,12 +62,13 @@ export default function HomePage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Vibepoint</h1>
-          <button
-            onClick={handleSignOut}
-            className="text-sm text-gray-600 hover:text-gray-900 transition-smooth"
+          <Link
+            href="/settings"
+            className="text-sm text-gray-600 hover:text-gray-900 transition-smooth flex items-center space-x-1"
           >
-            Sign Out
-          </button>
+            <span>⚙️</span>
+            <span>Settings</span>
+          </Link>
         </div>
 
         {/* Main card */}

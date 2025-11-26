@@ -75,6 +75,21 @@ export async function deleteMoodEntry(id: string): Promise<{ error: any }> {
   return { error };
 }
 
+export async function deleteAllMoodEntries(): Promise<{ error: any }> {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: new Error('Not authenticated') };
+  }
+
+  const { error } = await supabase
+    .from('mood_entries')
+    .delete()
+    .eq('user_id', user.id);
+
+  return { error };
+}
+
 // User preferences
 export async function hasCompletedOnboarding(): Promise<boolean> {
   const { data: { user } } = await supabase.auth.getUser();
