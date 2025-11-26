@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { getCurrentUser, signOut } from '@/lib/supabase';
 import { getMoodEntries } from '@/lib/db';
 import { format, startOfWeek } from 'date-fns';
+import { calculateStreak, getStreakMessage } from '@/lib/streak';
+import { checkNotificationPermission, requestNotificationPermission, scheduleDailyReminder } from '@/lib/notifications';
 
 export default function HomePage() {
   const router = useRouter();
@@ -13,6 +15,9 @@ export default function HomePage() {
   const [entriesThisWeek, setEntriesThisWeek] = useState(0);
   const [totalEntries, setTotalEntries] = useState(0);
   const [canViewPatterns, setCanViewPatterns] = useState(false);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [streakActive, setStreakActive] = useState(false);
+  const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
 
   useEffect(() => {
     // Check auth and load stats
@@ -27,7 +32,7 @@ export default function HomePage() {
       const { data } = await getMoodEntries();
       if (data) {
         setTotalEntries(data.length);
-        setCanViewPatterns(data.length >= 3); // Lowered from 10 to 3
+        setCanViewPatterns(data.length >= 3);
 
         // Count entries this week
         const weekStart = startOfWeek(new Date());
@@ -35,6 +40,17 @@ export default function HomePage() {
           (entry) => new Date(entry.created_at) >= weekStart
         ).length;
         setEntriesThisWeek(thisWeek);
+
+        // Calculate streak
+        const streakInfo = calculateStreak(data);
+        setCurrentStreak(streakInfo.currentStreak);
+        setStreakActive(streakInfo.streakActive);
+
+        // Check if we should show notification prompt
+        // Show if user has 2+ entries and hasn't granted permission
+        if (data.length >= 2 && checkNotificationPermission() === 'default') {
+          setShowNotificationPrompt(true);
+        }
       }
 
       setLoading(false);
@@ -42,6 +58,14 @@ export default function HomePage() {
 
     loadData();
   }, [router]);
+
+  const handleEnableNotifications = async () => {
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      scheduleDailyReminder(20, 0); // 8 PM daily
+      setShowNotificationPrompt(false);
+    }
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -70,6 +94,64 @@ export default function HomePage() {
             <span>Settings</span>
           </Link>
         </div>
+
+        {/* Streak Card (if user has entries) */}
+        {totalEntries > 0 && (
+          <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-200 rounded-2xl p-6 mb-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="text-5xl">🔥</div>
+                <div>
+                  <div className="text-3xl font-bold text-orange-900">{currentStreak}</div>
+                  <div className="text-sm text-orange-700">
+                    {currentStreak === 1 ? 'day streak' : 'days in a row'}
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-orange-800">
+                  {getStreakMessage(currentStreak, streakActive)}
+                </p>
+                {currentStreak >= 3 && (
+                  <p className="text-xs text-orange-600 mt-1">
+                    Keep it up!
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Notification Prompt */}
+        {showNotificationPrompt && (
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-6">
+            <div className="flex items-start space-x-3">
+              <div className="text-3xl">🔔</div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-blue-900 mb-1">
+                  Never miss a check-in
+                </h3>
+                <p className="text-sm text-blue-700 mb-3">
+                  Get a gentle daily reminder to log your mood. Build the habit!
+                </p>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={handleEnableNotifications}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-smooth"
+                  >
+                    Enable Reminders
+                  </button>
+                  <button
+                    onClick={() => setShowNotificationPrompt(false)}
+                    className="px-4 py-2 bg-white text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-smooth"
+                  >
+                    Maybe Later
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Main card */}
         <div className="bg-white rounded-3xl shadow-xl p-8 mb-6">

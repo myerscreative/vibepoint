@@ -356,6 +356,43 @@ export default function PatternsPage() {
             )}
           </div>
 
+          {/* Try a Recipe (Pro Feature Preview) */}
+          <Link
+            href="/recipe-player"
+            className="block bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 rounded-xl p-6 hover:border-pink-300 hover:shadow-lg transition-smooth"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
+                  <span>Try an Emotion Recipe</span>
+                  <span className="text-xs bg-gradient-to-r from-pink-600 to-orange-600 text-white px-2 py-1 rounded-full font-medium">
+                    PRO PREVIEW
+                  </span>
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  60-second guided exercises to shift how you feel
+                </p>
+              </div>
+              <div className="text-3xl">🧪</div>
+            </div>
+
+            <div className="bg-white bg-opacity-60 rounded-lg p-4 mb-3">
+              <p className="text-sm text-gray-800">
+                <strong>Want to feel confident right now?</strong> Try a personalized recipe that uses
+                your three controllable inputs: Focus, Self-talk, and Body.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-pink-700">
+                ✨ See how recipes work →
+              </span>
+              <div className="text-xs text-gray-500">
+                1 minute
+              </div>
+            </div>
+          </Link>
+
           {/* Not enough data for advanced insights */}
           {stats.totalEntries < 20 && (
             <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 text-center">

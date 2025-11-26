@@ -4,7 +4,7 @@
  */
 
 import { MoodEntry } from '@/types';
-import { startOfDay, differenceInDays, parseISO } from 'date-fns';
+import { startOfDay, differenceInDays } from 'date-fns';
 
 export interface StreakInfo {
   currentStreak: number;
