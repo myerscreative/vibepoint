@@ -1,0 +1,51 @@
+{
+  "name": "Vibepoint - Your Personal Mood Operating System",
+  "short_name": "Vibepoint",
+  "description": "Track your mood through three controllable inputs: focus, self-talk, and body. Discover patterns and learn to feel exactly how you want.",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2563EB",
+  "orientation": "portrait-primary",
+  "categories": ["health", "lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Log Mood",
+      "short_name": "Log",
+      "description": "Quickly log your current mood",
+      "url": "/mood/log",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "View History",
+      "short_name": "History",
+      "description": "View your mood history",
+      "url": "/history",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

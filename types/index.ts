@@ -96,3 +96,33 @@ export interface QuestionProgress {
     physical?: string;
   };
 }
+
+// Recipe types (Pro tier)
+export interface RecipeStep {
+  step: number;
+  focus: string;
+  instruction: string;
+  duration: number;
+}
+
+export interface Recipe {
+  id: string;
+  user_id: string;
+  title: string;
+  target_emotion: string;
+  duration: string;
+  steps: RecipeStep[];
+  why_this_works: string;
+  is_favorite: boolean;
+  created_at: string;
+  last_used_at?: string;
+  use_count: number;
+}
+
+export interface RecipeInput {
+  title: string;
+  target_emotion: string;
+  duration: string;
+  steps: RecipeStep[];
+  why_this_works: string;
+}
