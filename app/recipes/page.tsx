@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/supabase';
@@ -13,11 +13,7 @@ export default function RecipesPage() {
   const [filter, setFilter] = useState<'all' | 'favorites'>('all');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadRecipes();
-  }, [filter]);
-
-  const loadRecipes = async () => {
+  const loadRecipes = useCallback(async () => {
     const user = await getCurrentUser();
     if (!user) {
       router.push('/');
@@ -44,7 +40,11 @@ export default function RecipesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, router]);
+
+  useEffect(() => {
+    loadRecipes();
+  }, [loadRecipes]);
 
   const handleToggleFavorite = async (recipeId: string, currentStatus: boolean) => {
     try {

@@ -79,11 +79,11 @@ export default function OnboardingPage() {
             <div className="space-y-2 text-sm">
               <div className="flex items-start space-x-2">
                 <span>🎯</span>
-                <span className="text-red-800">Focusing on: <em>"Everything that could go wrong"</em></span>
+                <span className="text-red-800">Focusing on: <em>&quot;Everything that could go wrong&quot;</em></span>
               </div>
               <div className="flex items-start space-x-2">
                 <span>💭</span>
-                <span className="text-red-800">Telling yourself: <em>"I can't handle this"</em></span>
+                <span className="text-red-800">Telling yourself: <em>&quot;I can&apos;t handle this&quot;</em></span>
               </div>
               <div className="flex items-start space-x-2">
                 <span>🧘</span>
@@ -107,11 +107,11 @@ export default function OnboardingPage() {
             <div className="space-y-2 text-sm">
               <div className="flex items-start space-x-2">
                 <span>🎯</span>
-                <span className="text-green-800">Focusing on: <em>"What I can control right now"</em></span>
+                <span className="text-green-800">Focusing on: <em>&quot;What I can control right now&quot;</em></span>
               </div>
               <div className="flex items-start space-x-2">
                 <span>💭</span>
-                <span className="text-green-800">Telling yourself: <em>"One step at a time"</em></span>
+                <span className="text-green-800">Telling yourself: <em>&quot;One step at a time&quot;</em></span>
               </div>
               <div className="flex items-start space-x-2">
                 <span>🧘</span>
@@ -164,7 +164,7 @@ export default function OnboardingPage() {
           {/* Value proposition */}
           <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-4 border border-yellow-200">
             <p className="text-sm text-center text-gray-800">
-              <span className="font-semibold">After just 3 entries,</span> you'll start seeing what patterns help you feel better.
+              <span className="font-semibold">After just 3 entries,</span> you&apos;ll start seeing what patterns help you feel better.
             </p>
           </div>
         </div>

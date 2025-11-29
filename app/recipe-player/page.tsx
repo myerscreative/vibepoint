@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Recipe } from '@/types';
@@ -47,16 +47,7 @@ export default function RecipePlayerPage() {
   const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (recipeId && recipeId !== 'sample') {
-      loadRecipe();
-    } else {
-      setRecipe(sampleRecipe);
-      setLoading(false);
-    }
-  }, [recipeId]);
-
-  const loadRecipe = async () => {
+  const loadRecipe = useCallback(async () => {
     try {
       const response = await fetch(`/api/recipes/${recipeId}`);
       const data = await response.json();
@@ -81,7 +72,16 @@ export default function RecipePlayerPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [recipeId]);
+
+  useEffect(() => {
+    if (recipeId && recipeId !== 'sample') {
+      loadRecipe();
+    } else {
+      setRecipe(sampleRecipe);
+      setLoading(false);
+    }
+  }, [recipeId, loadRecipe]);
 
   const currentStepData = recipe?.steps[currentStep];
   const totalSteps = recipe?.steps.length || 0;
