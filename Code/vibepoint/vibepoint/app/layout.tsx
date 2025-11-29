@@ -20,6 +20,20 @@ export const metadata: Metadata = {
     icon: '/logo-icon.svg',
     apple: '/logo-icon.svg',
   },
+  manifest: '/manifest.json',
+  themeColor: '#c026d3',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'VibePoint',
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover',
+  },
 };
 
 export default function RootLayout({

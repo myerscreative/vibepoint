@@ -1,36 +1,81 @@
-# VibePoint — Onboarding Screens (Tony Robbins Style)
+# VibePoint — Updated Onboarding Screens
+
+
 
 ---
 
-## Screen 1 — The Wake-Up
-**Master Your Emotions. Master Your Life.**  
-Your emotions don’t “just happen.” They’re created by patterns you can learn to control.
+
+
+## Screen 1  
+
+**Master Your Emotional State.**  
+
+Your emotions follow patterns you can learn to understand and change.
+
+
 
 ---
 
-## Screen 2 — The Power
-**Every Emotion Has a Recipe.**  
-Your focus, your self-talk, and your physiology combine to create how you feel.  
-Change the ingredients → change the state.
+
+
+## Screen 2  
+
+**Your First Ingredient: Focus**  
+
+Your focus is whatever your mind is locked onto right now.
+
+
 
 ---
 
-## Screen 3 — The Clarity
-**Stop Guessing. Start Understanding.**  
-VibePoint helps you see the real source of your emotions —  
-so you can shift them with intention.
+
+
+## Screen 3  
+
+**Focus Sometimes Includes Mental Images**  
+
+Memories, imagined scenarios, what-ifs…  
+
+But you don't have to "visualize" to use VibePoint effectively.  
+
+We begin with focus because everyone has it.
+
+
 
 ---
 
-## Screen 4 — The Breakthrough
-**This Isn’t a Mood Tracker.**  
-It’s a state-mastery tool.  
-No labels, no judgment, no emotional “diaries.”  
-Just clarity, choice, and power.
+
+
+## Screen 4  
+
+**Break Down Every State**  
+
+Focus → Self-talk → Physiology  
+
+Separate the ingredients → gain clarity → gain control.
+
+
 
 ---
 
-## Screen 5 — The Invitation
-**Ready to Take Control?**  
-Tap the map, track your emotional ingredients, and build unstoppable inner strength.  
-Let’s begin.
+
+
+## Screen 5  
+
+**Not a Mood Tracker — A State Mastery System**  
+
+You don't just record how you feel.  
+
+You understand why you feel it and how to shift it.
+
+
+
+---
+
+
+
+## Screen 6  
+
+**Let's Begin**  
+
+Tap where you are on the map and identify your ingredients.

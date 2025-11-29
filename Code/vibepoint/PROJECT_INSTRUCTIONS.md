@@ -134,7 +134,7 @@ After mood selection, user answers three core questions:
 - Automatic shift detection
 - 90-day history retention
 
-**Premium Tier ($4.99/mo or $39.99/yr):**
+**Premium Tier ($7.99/mo or $59/yr):**
 - Everything in Free, plus:
 - **"My Recipes"** - Save proven state-shift formulas
 - **"Up Your Vibe"** - Active recipe suggestions after low mood logs

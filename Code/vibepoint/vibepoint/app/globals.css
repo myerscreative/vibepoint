@@ -191,23 +191,7 @@ body {
   animation: highlightPulse 1s ease-out;
 }
 
-/* Mood marker styling */
-.mood-marker {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  border: 3px solid white;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
-}
+/* Old mood marker styling removed - using premium marker below */
 
 .font-playfair {
   font-family: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
@@ -1960,3 +1944,263 @@ input#confirmPassword.password-input-dark {
   font-family: 'Outfit', sans-serif;
 }
 
+/* Mood Gradient Selector Improvements */
+.mood-mapping-title {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #4A5568;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.axis-label {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #A0AEC0;
+  text-transform: uppercase;
+}
+
+/* Absolute positioning for left/right axis labels to center gradient */
+/* Labels are positioned relative to the wrapper, at fixed distance from gradient edges */
+.axis-left {
+  position: absolute;
+  right: calc(50% + 240px + 12px); /* Center + half gradient (480px/2) + 12px gap */
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.axis-right {
+  position: absolute;
+  left: calc(50% + 240px + 12px); /* Center + half gradient (480px/2) + 12px gap */
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Responsive: On smaller screens, gradient is 100% width, so adjust accordingly */
+@media (max-width: 640px) {
+  .axis-left {
+    right: calc(50% + 50vw + 12px); /* Center + half viewport + gap */
+  }
+  
+  .axis-right {
+    left: calc(50% + 50vw + 12px); /* Center + half viewport + gap */
+  }
+}
+
+.percentage-label {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.instruction-text {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #4A5568;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* (Old percentage-readouts CSS removed) */
+
+/* Premium typography for mood mapping title */
+.mood-mapping-title {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: #6B7280;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0.8;
+}
+
+/* Gradient frame around mood selector — match home page demo card */
+.gradient-frame {
+  position: relative;
+  padding: 2px;
+  border-radius: 42px;
+  background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #F97316 100%);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+}
+
+.gradient-inner {
+  background: white;
+  border-radius: 40px;
+  padding: 1px;
+}
+
+/* Gradient Container (inner) */
+.gradient-container {
+  border-radius: 40px;
+  position: relative;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.grid-overlay {
+  display: none;
+}
+
+/* Clean Mood Marker - 32px with ring and dot */
+.mood-marker {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  /* NO transition here - marker must move instantly */
+}
+
+.marker-ring {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.marker-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Click ripple effect */
+.click-ripple {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: ripple-out 0.8s ease-out;
+}
+
+@keyframes ripple-out {
+  to {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .percentage-display {
+    font-size: 36px;
+  }
+  
+  .percentage-readouts {
+    gap: 24px;
+  }
+  
+  .mood-selector-card {
+    padding: 24px;
+  }
+}
+
+.mood-canvas {
+  border-radius: 40px;
+}
+
+.mood-canvas canvas {
+  border-radius: 40px;
+}
+
+/* Compact combined percentage readout */
+.percentage-readout-combined {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.readout-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.readout-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.readout-label {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #9CA3AF;
+  text-transform: uppercase;
+}
+
+.readout-value {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 56px;
+  font-weight: 600;
+  color: #1A1A2E;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  transition: color 0.4s ease;
+  text-shadow: 
+    0 3px 6px rgba(255, 255, 255, 1),
+    0 6px 12px rgba(255, 255, 255, 1),
+    0 0 24px rgba(255, 255, 255, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.readout-value .readout-percent {
+  font-size: 0.6em !important;
+  font-weight: 300 !important;
+  opacity: 0.6 !important;
+  margin-left: 2px;
+}
+
+.readout-divider {
+  font-family: var(--font-fraunces), 'Fraunces', serif;
+  font-size: 24px !important;
+  font-weight: 300 !important;
+  color: #D1D5DB !important;
+  line-height: 1;
+  margin: 0 12px;
+  opacity: 0.5 !important;
+  display: inline-block;
+  vertical-align: middle;
+}

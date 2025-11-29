@@ -50,7 +50,28 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
 
 async function createDevUser() {
   try {
-    console.log('Creating dev user account...')
+    console.log('🔍 Checking if dev user exists...')
+    
+    // First, try to find the user by email
+    const { data: users, error: listError } = await supabase.auth.admin.listUsers()
+    
+    if (listError) {
+      console.error('❌ Error listing users:', listError.message)
+      return
+    }
+
+    const devUser = users.users.find(user => user.email === 'dev@vibepoint.local')
+    
+    if (devUser) {
+      console.log('✅ Dev user already exists!')
+      console.log('User ID:', devUser.id)
+      console.log('Email:', devUser.email)
+      console.log('\nTo reset the password, run: node reset-dev-password.js')
+      console.log('Or use the dev sign-in button on the login page.')
+      return
+    }
+
+    console.log('Creating new dev user account...')
     
     const { data, error } = await supabase.auth.admin.createUser({
       email: 'dev@vibepoint.local',
@@ -59,16 +80,12 @@ async function createDevUser() {
     })
 
     if (error) {
-      if (error.message.includes('already registered')) {
-        console.log('✅ Dev user already exists!')
-        console.log('You can now use the dev sign-in button on the login page.')
-      } else {
-        console.error('❌ Error creating user:', error.message)
-      }
+      console.error('❌ Error creating user:', error.message)
     } else {
       console.log('✅ Dev user created successfully!')
       console.log('User ID:', data.user.id)
       console.log('Email:', data.user.email)
+      console.log('Password: dev123456')
       console.log('\nYou can now use the dev sign-in button on the login page.')
     }
   } catch (err) {

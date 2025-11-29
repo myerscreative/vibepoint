@@ -1,49 +1,29 @@
 /**
- * Pro Tier Utilities
+ * Pro Tier Utilities - Client-Side
  *
- * Functions for checking Pro tier access and limits.
- * For MVP, this is a simple stub. In production, integrate with Stripe.
+ * Client-side functions for checking Pro tier access.
+ * This file is safe to import in client components.
  */
 
-import { createServerSupabaseClient } from '@/lib/supabase-server';
+import { ProTierStatus, getFreeTierStatus } from './pro-tier-shared';
 
-export interface ProTierStatus {
-  isPro: boolean;
-  features: {
-    aiInsights: boolean;
-    emotionRecipes: boolean;
-    advancedPatterns: boolean;
-    exportData: boolean;
-  };
-  limits: {
-    recipesPerWeek: number;
-    aiRequestsPerHour: number;
-  };
-}
+// Re-export types for convenience
+export type { ProTierStatus } from './pro-tier-shared';
 
-export async function checkProStatus(): Promise<ProTierStatus> {
-  // For MVP/Beta, everyone gets Pro features!
-  // In the future, check subscription status here
-  
-  const isPro = true; 
-  
-  return {
-    isPro,
-    features: {
-      aiInsights: true,
-      emotionRecipes: true,
-      advancedPatterns: isPro,
-      exportData: true,
-    },
-    limits: {
-      recipesPerWeek: isPro ? 100 : 3,
-      aiRequestsPerHour: isPro ? 50 : 5,
+/**
+ * Client-side helper to check Pro status
+ * Uses the API route to get subscription status
+ */
+export async function checkProStatusClient(): Promise<ProTierStatus> {
+  try {
+    const response = await fetch('/api/subscriptions/status');
+    if (!response.ok) {
+      return getFreeTierStatus();
     }
-  };
-}
-
-export async function canGenerateRecipe(): Promise<boolean> {
-  const status = await checkProStatus();
-  // Implement actual checking logic against database usage counts here
-  return true;
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error checking Pro status (client):', error);
+    return getFreeTierStatus();
+  }
 }

@@ -333,7 +333,7 @@ CREATE INDEX idx_user_subscription_user_id ON user_subscription(user_id);
 **Messaging to free users:**
 "You're building awareness of what creates your moods. Upgrade to turn these patterns into actionable recipes."
 
-### Premium Tier Features ($4.99/mo or $39.99/yr)
+### Premium Tier Features ($7.99/mo or $59/yr)
 Everything in Free, plus:
 
 ✅ **"My Recipes"** - Save proven state-shift formulas  

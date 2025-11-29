@@ -1,10 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import MoodSelector from '@/components/MoodSelector'
 import { supabase } from '@/lib/supabase'
+import { checkThrottle, getLastMoodEntry, calculateMinutesSince } from '@/lib/moodUtils'
+import { ThrottleWarningModal } from '@/components/ThrottleWarningModal'
+import { HardLimitModal } from '@/components/HardLimitModal'
+import { RapidShiftContextPrompt } from '@/components/RapidShiftContextPrompt'
 
 const primaryEmotions = [
   'Calm',
@@ -49,7 +52,6 @@ const emotionGroups = [
 export default function MoodInputPage() {
   const [happiness, setHappiness] = useState(0.5)
   const [motivation, setMotivation] = useState(0.5)
-  const [selectedColor, setSelectedColor] = useState('#1A1A2E')
 
   const [focus, setFocus] = useState('')
   const [selfTalk, setSelfTalk] = useState('')
@@ -59,120 +61,18 @@ export default function MoodInputPage() {
   const [notes, setNotes] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [showEmotionList, setShowEmotionList] = useState(false)
+  
+  // Throttle modal states
+  const [showThrottleWarning, setShowThrottleWarning] = useState(false)
+  const [showHardLimit, setShowHardLimit] = useState(false)
+  const [showContextPrompt, setShowContextPrompt] = useState(false)
+  const [throttleInfo, setThrottleInfo] = useState<{
+    minutesSince: number
+    overridesLeft: number
+    minutesUntilNext: number | null
+  } | null>(null)
 
-  // Corner colors in HSL (Hue, Saturation, Lightness)
-  const cornersHSL = {
-    topLeft: { h: 195, s: 70, l: 65 },      // Cyan/Sky Blue (happy + unmotivated)
-    topRight: { h: 45, s: 100, l: 55 },     // Bright Yellow/Gold (happy + motivated)
-    bottomLeft: { h: 260, s: 75, l: 35 },   // Deep Purple/Indigo (unhappy + unmotivated)
-    bottomRight: { h: 348, s: 80, l: 50 }   // Vibrant Red/Crimson (unhappy + motivated)
-  }
-
-  // HSL to RGB conversion function
-  const hslToRgb = (h: number, s: number, l: number): { r: number, g: number, b: number } => {
-    s /= 100
-    l /= 100
-    
-    const c = (1 - Math.abs(2 * l - 1)) * s
-    const x = c * (1 - Math.abs((h / 60) % 2 - 1))
-    const m = l - c / 2
-    
-    let r = 0, g = 0, b = 0
-    
-    if (h >= 0 && h < 60) {
-      r = c; g = x; b = 0
-    } else if (h >= 60 && h < 120) {
-      r = x; g = c; b = 0
-    } else if (h >= 120 && h < 180) {
-      r = 0; g = c; b = x
-    } else if (h >= 180 && h < 240) {
-      r = 0; g = x; b = c
-    } else if (h >= 240 && h < 300) {
-      r = x; g = 0; b = c
-    } else if (h >= 300 && h < 360) {
-      r = c; g = 0; b = x
-    }
-    
-    return {
-      r: Math.round((r + m) * 255),
-      g: Math.round((g + m) * 255),
-      b: Math.round((b + m) * 255)
-    }
-  }
-
-  // Bilinear interpolation in HSL space
-  const bilinearInterpolateHSL = (
-    x: number, 
-    y: number, 
-    c00: { h: number, s: number, l: number }, 
-    c10: { h: number, s: number, l: number }, 
-    c01: { h: number, s: number, l: number }, 
-    c11: { h: number, s: number, l: number }
-  ): { r: number, g: number, b: number } => {
-    // Interpolate Hue (handle circular nature - 0° = 360°)
-    const interpolateHue = (h1: number, h2: number, h3: number, h4: number) => {
-      // Convert to radians for circular interpolation
-      const toRad = (h: number) => (h * Math.PI) / 180
-      const toDeg = (r: number) => (r * 180) / Math.PI
-      
-      const h1r = toRad(h1), h2r = toRad(h2), h3r = toRad(h3), h4r = toRad(h4)
-      
-      // Interpolate in circular space
-      const hx = Math.sin(h1r) * (1 - x) * (1 - y) +
-                 Math.sin(h2r) * x * (1 - y) +
-                 Math.sin(h3r) * (1 - x) * y +
-                 Math.sin(h4r) * x * y
-      
-      const hy = Math.cos(h1r) * (1 - x) * (1 - y) +
-                 Math.cos(h2r) * x * (1 - y) +
-                 Math.cos(h3r) * (1 - x) * y +
-                 Math.cos(h4r) * x * y
-      
-      let hue = toDeg(Math.atan2(hx, hy))
-      if (hue < 0) hue += 360
-      
-      return hue
-    }
-    
-    // Standard bilinear for Saturation and Lightness
-    const h = interpolateHue(c00.h, c10.h, c01.h, c11.h)
-    
-    const s = c00.s * (1 - x) * (1 - y) +
-              c10.s * x * (1 - y) +
-              c01.s * (1 - x) * y +
-              c11.s * x * y
-    
-    const l = c00.l * (1 - x) * (1 - y) +
-              c10.l * x * (1 - y) +
-              c01.l * (1 - x) * y +
-              c11.l * x * y
-    
-    // Convert back to RGB
-    return hslToRgb(h, s, l)
-  }
-
-  // Calculate color from mood coordinates using HSL interpolation
-  const calculateColor = (x: number, y: number) => {
-    const xRatio = x
-    const yRatio = 1 - y // Inverted for gradient space
-
-    const color = bilinearInterpolateHSL(
-      xRatio,
-      yRatio,
-      cornersHSL.topLeft,
-      cornersHSL.topRight,
-      cornersHSL.bottomLeft,
-      cornersHSL.bottomRight
-    )
-
-    return `rgb(${color.r}, ${color.g}, ${color.b})`
-  }
-
-  // Update color when mood changes
-  useEffect(() => {
-    const color = calculateColor(motivation, happiness)
-    setSelectedColor(color)
-  }, [motivation, happiness])
+  // Note: Color calculation is handled by MoodSelector component
 
   const backgroundStyle = {
     background: 'linear-gradient(135deg, #d4f1f9 0%, #f8e8f0 35%, #fdf6e9 65%, #f5e6e0 100%)',
@@ -216,7 +116,8 @@ export default function MoodInputPage() {
     )
   }
 
-  const handleSave = async () => {
+  // Save entry with throttle data
+  const saveEntry = async (isRapidShift: boolean = false, rapidShiftContext: string | null = null) => {
     if (isSaving) return
 
     try {
@@ -236,11 +137,31 @@ export default function MoodInputPage() {
 
       if (!focus.trim() || !selfTalk.trim() || !body.trim()) {
         alert('Please fill in all required fields (focus, self-talk, and physical sensations)')
+        setIsSaving(false)
         return
       }
 
+      // Get last entry to calculate minutes since
+      const lastEntry = await getLastMoodEntry(user.id)
+      const minutesSince = lastEntry 
+        ? calculateMinutesSince(lastEntry.created_at || lastEntry.timestamp) 
+        : null
+
       const emotionName = getEmotionName()
-      const entry: any = {
+      const entry: {
+        user_id: string
+        happiness_level: number
+        motivation_level: number
+        focus: string
+        self_talk: string
+        physical_sensations: string
+        notes: string | null
+        timestamp: string
+        is_rapid_shift: boolean
+        minutes_since_last_entry: number | null
+        emotion_name?: string
+        rapid_shift_context?: string
+      } = {
         user_id: user.id,
         happiness_level: happiness,
         motivation_level: motivation,
@@ -249,11 +170,18 @@ export default function MoodInputPage() {
         physical_sensations: body.trim(),
         notes: notes?.trim() || null,
         timestamp: new Date().toISOString(),
+        is_rapid_shift: isRapidShift,
+        minutes_since_last_entry: minutesSince,
       }
 
       // Add emotion_name if provided
       if (emotionName) {
         entry.emotion_name = emotionName
+      }
+
+      // Add rapid shift context if provided
+      if (rapidShiftContext) {
+        entry.rapid_shift_context = rapidShiftContext
       }
 
       console.log('Attempting to insert entry:', entry)
@@ -275,6 +203,9 @@ export default function MoodInputPage() {
         setSelectedEmotion('')
         setEmotionCustom('')
         setNotes('')
+        // Reset to default mood position
+        setHappiness(0.5)
+        setMotivation(0.5)
       } else {
         console.warn('Insert succeeded but no data returned')
         alert('Entry saved but no confirmation received. Please refresh and check your entries.')
@@ -286,6 +217,90 @@ export default function MoodInputPage() {
     } finally {
       setIsSaving(false)
     }
+  }
+
+  const handleSave = async () => {
+    if (isSaving) return
+
+    try {
+      setIsSaving(true)
+
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser()
+
+      if (authError || !user) {
+        console.warn('No user found - cannot save entry without authentication')
+        alert('Authentication required to save entries. Please log in first.')
+        setIsSaving(false)
+        return
+      }
+
+      if (!focus.trim() || !selfTalk.trim() || !body.trim()) {
+        alert('Please fill in all required fields (focus, self-talk, and physical sensations)')
+        setIsSaving(false)
+        return
+      }
+
+      // Check throttle
+      const throttle = await checkThrottle(user.id)
+
+      if (throttle.shouldThrottle) {
+        setIsSaving(false)
+        
+        if (throttle.minutesUntilNext !== null) {
+          // Hard limit reached
+          setThrottleInfo({
+            minutesSince: throttle.minutesSince || 0,
+            overridesLeft: 0,
+            minutesUntilNext: throttle.minutesUntilNext,
+          })
+          setShowHardLimit(true)
+          return
+        } else {
+          // Can override - show warning
+          const overridesLeft = 3 - throttle.overridesToday
+          setThrottleInfo({
+            minutesSince: throttle.minutesSince || 0,
+            overridesLeft,
+            minutesUntilNext: null,
+          })
+          setShowThrottleWarning(true)
+          return
+        }
+      }
+
+      // No throttle - save directly
+      await saveEntry(false, null)
+    } catch (err) {
+      console.error('Unexpected error:', err)
+      const message = err instanceof Error ? err.message : 'Unknown error'
+      alert(`An unexpected error occurred: ${message}`)
+      setIsSaving(false)
+    }
+  }
+
+  // Handle throttle warning modal actions
+  const handleThrottleWait = () => {
+    setShowThrottleWarning(false)
+    setThrottleInfo(null)
+  }
+
+  const handleThrottleOverride = () => {
+    setShowThrottleWarning(false)
+    setShowContextPrompt(true)
+  }
+
+  // Handle rapid shift context submission
+  const handleContextSubmit = async (context: string) => {
+    setShowContextPrompt(false)
+    await saveEntry(true, context || null)
+  }
+
+  const handleContextCancel = () => {
+    setShowContextPrompt(false)
+    setThrottleInfo(null)
   }
 
   return (
@@ -343,9 +358,6 @@ export default function MoodInputPage() {
                 setMotivation(x)
                 setHappiness(y)
               }}
-              onColorChange={(color) => {
-                setSelectedColor(color)
-              }}
               showHeader={false}
               showStats={true}
               selectedMood={{ x: motivation, y: happiness }}
@@ -370,6 +382,9 @@ export default function MoodInputPage() {
                 <label className="mb-2 block text-base font-semibold text-[#1a1a2e]" style={bodyFont}>
                   What are you focusing on?
                 </label>
+                <p className="mb-2 text-sm text-[#4a4a6a]" style={bodyFont}>
+                  If you notice any images or scenarios, include those too.
+                </p>
                 <input
                   value={focus}
                   onChange={(event) => setFocus(event.target.value)}
@@ -515,6 +530,32 @@ export default function MoodInputPage() {
           </div>
         </div>
       </div>
+
+      {/* Throttle Modals */}
+      {throttleInfo && (
+        <>
+          <ThrottleWarningModal
+            isOpen={showThrottleWarning}
+            minutesSince={throttleInfo.minutesSince}
+            overridesLeft={throttleInfo.overridesLeft}
+            onWait={handleThrottleWait}
+            onOverride={handleThrottleOverride}
+          />
+          <HardLimitModal
+            isOpen={showHardLimit}
+            minutesUntilNext={throttleInfo.minutesUntilNext || 0}
+            onDismiss={() => {
+              setShowHardLimit(false)
+              setThrottleInfo(null)
+            }}
+          />
+        </>
+      )}
+      <RapidShiftContextPrompt
+        isOpen={showContextPrompt}
+        onCancel={handleContextCancel}
+        onSubmit={handleContextSubmit}
+      />
     </div>
   )
 }

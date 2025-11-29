@@ -16,6 +16,7 @@ import InsightCard from '@/components/dashboard/insights/InsightCard'
 import UnlockMessage from '@/components/dashboard/unlock/UnlockMessage'
 import { UpgradeModal } from '@/components/UpgradeModal'
 import { ProUpgradeCard } from '@/components/dashboard/pro/ProUpgradeCard'
+import { checkProStatusClient, ProTierStatus } from '@/lib/pro-tier'
 
 export default function HomePage() {
   const [stats, setStats] = useState<MoodStats | null>(null)
@@ -24,11 +25,38 @@ export default function HomePage() {
   const [user, setUser] = useState<any>(null)
   const [isUpgradeOpen, setIsUpgradeOpen] = useState(false)
   const [showWelcomeCard, setShowWelcomeCard] = useState(false)
+  const [proStatus, setProStatus] = useState<ProTierStatus | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     checkAuthAndLoadStats()
+    loadProStatus()
   }, [])
+
+  const loadProStatus = async () => {
+    try {
+      const status = await checkProStatusClient()
+      setProStatus(status)
+    } catch (error) {
+      console.error('Error loading Pro status:', error)
+      // Default to free tier on error
+      setProStatus({
+        isPro: false,
+        tier: 'free',
+        status: 'free',
+        features: {
+          aiInsights: false,
+          emotionRecipes: false,
+          advancedPatterns: false,
+          exportData: false,
+        },
+        limits: {
+          recipesPerWeek: 3,
+          aiRequestsPerHour: 5,
+        },
+      })
+    }
+  }
 
   // AUTH DISABLED FOR DEVELOPMENT - No redirect to login
   // useEffect(() => {
@@ -196,8 +224,8 @@ export default function HomePage() {
   //   )
   // }
 
-  // TODO: integrate real Pro status from server when available
-  const isProUser = false
+  // Get Pro status from state (defaults to free if not loaded yet)
+  const isProUser = proStatus?.isPro ?? false
 
   const name =
     user?.user_metadata?.full_name ||

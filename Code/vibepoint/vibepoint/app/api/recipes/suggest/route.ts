@@ -86,8 +86,8 @@ export async function GET(request: NextRequest) {
       if (!a.is_favorite && b.is_favorite) return 1;
       
       // Then by success rate (if available)
-      const aSuccessRate = a.avg_rating && a.times_used ? (a.success_count / a.times_used) : 0;
-      const bSuccessRate = b.avg_rating && b.times_used ? (b.success_count / b.times_used) : 0;
+      const aSuccessRate = a.avg_rating && a.times_used && a.success_count ? (a.success_count / a.times_used) : 0;
+      const bSuccessRate = b.avg_rating && b.times_used && b.success_count ? (b.success_count / b.times_used) : 0;
       
       if (bSuccessRate !== aSuccessRate) {
         return bSuccessRate - aSuccessRate;

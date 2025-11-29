@@ -579,7 +579,7 @@ export default function DeepDivePage() {
           <div 
             className="cta-card rounded-[28px] p-8 md:p-10 text-center text-white shadow-2xl mt-12 relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, #f97316 0%, #c026d3 50%, #7c3aed 100%)',
+              background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)',
               boxShadow: '0 12px 40px rgba(192, 38, 211, 0.3)'
             }}
           >

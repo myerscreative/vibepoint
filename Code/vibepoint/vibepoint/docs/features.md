@@ -1,63 +1,47 @@
-# VibePoint — Feature Overview
+# VibePoint — Core Features
 
-## 1. Emotional Map
-A simple two-axis map:
-- Happiness (vertical)
-- Motivation (horizontal)
 
-Users tap where they are — fast, intuitive, meaningful.
 
----
+## Focus Tracking
 
-## 2. State Breakdown
-The core of VibePoint:
-- Focus (Visual)
-- Self-Talk (Auditory)
-- Physiology (Body/Felt Sense)
+Identify what your mind is centered on at any moment.  
 
-Decouples emotional ingredients for clarity and leverage.
+*(Not just visuals — any mental spotlight.)*
 
----
 
-## 3. Pattern Insights
-Automatic pattern recognition:
-- triggers  
-- recurring thought loops  
-- recurring focus themes  
-- recurring bodily states  
-- correlations between happiness and motivation  
 
----
+## Visualization Awareness (within Focus)
 
-## 4. Daily State Reset
-A 60-second ritual:
-- Break pattern  
-- Redirect focus  
-- Train inner voice  
-- Align physiology  
+If users notice mental images, they can include them.  
 
----
+This enhances clarity but is never required.
 
-## 5. History Timeline
-Not a journal.  
-A **data-rich emotional overview** showing:
-- trends  
-- streaks  
-- patterns  
-- insights  
 
----
 
-## 6. Privacy First
-- No data selling  
-- Encryption  
-- Local-only mode (future)  
+## Self-Talk Awareness  
 
----
+Track the internal dialogue influencing your emotion.
 
-## 7. Educational Micro-Lessons
-Short lessons on:
-- focus control  
-- self-talk management  
-- physiology shifts  
-- emotional recipes  
+
+
+## Physiology Mapping  
+
+Understand how your body amplifies your state.
+
+
+
+## Pattern Recognition  
+
+Detect repeating focuses, recurring inner voices, or bodily trends.
+
+
+
+## Emotional Map  
+
+A visual overview of happiness and motivation.
+
+
+
+## Daily State Reset  
+
+Shift your entire emotional state using simple, fast steps.

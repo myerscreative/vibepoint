@@ -118,6 +118,9 @@ export default function EditEntryModal({ entry, onClose, onSave }: EditEntryModa
             <label htmlFor="edit-focus" className="block text-sm font-semibold text-text-primary">
               What are you focusing on?
             </label>
+            <p className="text-xs text-text-secondary/80">
+              If you notice any images or scenarios, include those too.
+            </p>
             <textarea
               id="edit-focus"
               value={focus}
@@ -204,7 +207,7 @@ export default function EditEntryModal({ entry, onClose, onSave }: EditEntryModa
             onClick={handleSave}
             disabled={isSaving}
             style={{
-              background: 'linear-gradient(135deg, #f97316 0%, #c026d3 50%, #7c3aed 100%)',
+              background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)',
               boxShadow: '0 4px 20px rgba(192, 38, 211, 0.3)',
             }}
           >

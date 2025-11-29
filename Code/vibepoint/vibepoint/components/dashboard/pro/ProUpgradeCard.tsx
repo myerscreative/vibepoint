@@ -36,8 +36,8 @@ export const ProUpgradeCard: React.FC<ProUpgradeCardProps> = ({ onUpgrade }) => 
           onClick={onUpgrade}
           className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
           style={{
-            background: 'linear-gradient(135deg, #c71585, #ff1493)',
-            boxShadow: '0 4px 20px rgba(199, 21, 133, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+            background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)',
+            boxShadow: '0 4px 20px rgba(192, 38, 211, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
           }}
         >
           <span>Upgrade to Pro</span>

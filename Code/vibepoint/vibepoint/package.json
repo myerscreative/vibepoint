@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "reset-dev-password": "node reset-dev-password.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",

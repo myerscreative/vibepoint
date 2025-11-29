@@ -5,12 +5,14 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { MoodEntry } from '@/types'
-import { format, startOfWeek, startOfMonth, isWithinInterval } from 'date-fns'
+import { format, startOfWeek, startOfMonth, isWithinInterval, subDays } from 'date-fns'
 import { GradientBackground } from '@/components/GradientBackground'
 import { MiniMoodDisplay } from '@/components/MiniMoodDisplay'
 import EditEntryModal from '@/components/EditEntryModal'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal'
 import { getMoodColor } from '@/components/dashboard/utils/dashboardUtils'
+import { checkProStatusClient, ProTierStatus } from '@/lib/pro-tier'
+import { UpgradeModal } from '@/components/UpgradeModal'
 
 type FilterType = 'all' | 'week' | 'month'
 
@@ -25,6 +27,9 @@ function HistoryPageContent() {
   const [editingEntry, setEditingEntry] = useState<MoodEntry | null>(null)
   const [deletingEntryId, setDeletingEntryId] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
+  const [proStatus, setProStatus] = useState<ProTierStatus | null>(null)
+  const [isUpgradeOpen, setIsUpgradeOpen] = useState(false)
+  const [hiddenEntriesCount, setHiddenEntriesCount] = useState(0)
   const menuRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const router = useRouter()
 
@@ -38,8 +43,34 @@ function HistoryPageContent() {
 
   useEffect(() => {
     checkAuthAndLoadEntries()
+    loadProStatus()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const loadProStatus = async () => {
+    try {
+      const status = await checkProStatusClient()
+      setProStatus(status)
+    } catch (error) {
+      console.error('Error loading Pro status:', error)
+      // Default to free tier on error
+      setProStatus({
+        isPro: false,
+        tier: 'free',
+        status: 'free',
+        features: {
+          aiInsights: false,
+          emotionRecipes: false,
+          advancedPatterns: false,
+          exportData: false,
+        },
+        limits: {
+          recipesPerWeek: 3,
+          aiRequestsPerHour: 5,
+        },
+      })
+    }
+  }
 
   useEffect(() => {
     applyFilter()
@@ -72,13 +103,48 @@ function HistoryPageContent() {
 
   const loadEntries = async (userId: string) => {
     try {
-      const { data, error } = await supabase
+      // Get Pro status if not already loaded
+      let isPro = false
+      if (!proStatus) {
+        const status = await checkProStatusClient()
+        setProStatus(status)
+        isPro = status.isPro
+      } else {
+        isPro = proStatus.isPro
+      }
+
+      // Build query
+      let query = supabase
         .from('mood_entries')
         .select('*')
         .eq('user_id', userId)
-        .order('timestamp', { ascending: false })
+
+      // For free users, only get entries from last 90 days
+      if (!isPro) {
+        const ninetyDaysAgo = subDays(new Date(), 90).toISOString()
+        query = query.gte('timestamp', ninetyDaysAgo)
+      }
+
+      const { data, error } = await query.order('timestamp', { ascending: false })
 
       if (error) throw error
+
+      // If free user, check if there are older entries being hidden
+      if (!isPro) {
+        // Get total count to see if we're hiding any
+        const { count } = await supabase
+          .from('mood_entries')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId)
+        
+        const totalCount = count || 0
+        const visibleCount = data?.length || 0
+        const hidden = totalCount - visibleCount
+        setHiddenEntriesCount(hidden > 0 ? hidden : 0)
+      } else {
+        setHiddenEntriesCount(0)
+      }
+
       setEntries(data || [])
     } catch (error) {
       console.error('Failed to load entries:', error)
@@ -191,7 +257,8 @@ function HistoryPageContent() {
       return
     }
 
-    // Refresh entries
+    // Refresh entries (reload Pro status too)
+    await loadProStatus()
     await loadEntries(userId)
     setDeletingEntryId(null)
   }
@@ -299,6 +366,33 @@ function HistoryPageContent() {
             </div>
           </div>
         </div>
+
+        {/* Upgrade Prompt for Free Users with Hidden Entries */}
+        {!proStatus?.isPro && hiddenEntriesCount > 0 && (
+          <div className="mb-6 rounded-2xl border-2 border-pro-primary/30 bg-gradient-to-br from-[#fff5f8] to-white p-5 shadow-lg animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 text-3xl">🔒</div>
+              <div className="flex-1">
+                <h3 className="mb-1 font-display text-lg font-semibold text-text-primary">
+                  Unlock Unlimited History
+                </h3>
+                <p className="mb-4 text-sm text-text-secondary">
+                  You have {hiddenEntriesCount} {hiddenEntriesCount === 1 ? 'entry' : 'entries'} older than 90 days. 
+                  Upgrade to Pro to access your complete mood journey.
+                </p>
+                <button
+                  onClick={() => setIsUpgradeOpen(true)}
+                  className="rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
+                  style={{
+                    background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)',
+                  }}
+                >
+                  Upgrade to Pro
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Entries List */}
         {filteredEntries.length === 0 ? (
@@ -549,6 +643,12 @@ function HistoryPageContent() {
             onCancel={() => setDeletingEntryId(null)}
           />
         )}
+
+        {/* Upgrade Modal */}
+        <UpgradeModal
+          isOpen={isUpgradeOpen}
+          onClose={() => setIsUpgradeOpen(false)}
+        />
       </div>
     </div>
   )

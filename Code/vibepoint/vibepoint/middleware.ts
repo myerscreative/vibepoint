@@ -27,36 +27,37 @@ export async function middleware(request: NextRequest) {
     }
   )
 
+  // AUTH DISABLED FOR DEVELOPMENT - All routes are accessible without login
   // Refresh session if expired - required for Server Components
-  try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+  // try {
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser()
 
-    // Don't redirect from /home - let the page handle login UI
-    // Only protect other authenticated routes
-    const protectedRoutes = ['/history', '/mood', '/patterns', '/recipes']
-    const isProtectedRoute = protectedRoutes.some(route => 
-      request.nextUrl.pathname.startsWith(route)
-    )
+  //   // Don't redirect from /home - let the page handle login UI
+  //   // Only protect other authenticated routes
+  //   const protectedRoutes = ['/history', '/mood', '/patterns', '/recipes']
+  //   const isProtectedRoute = protectedRoutes.some(route => 
+  //     request.nextUrl.pathname.startsWith(route)
+  //   )
 
-    if (!user && isProtectedRoute) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/home'
-      return NextResponse.redirect(url)
-    }
+  //   if (!user && isProtectedRoute) {
+  //     const url = request.nextUrl.clone()
+  //     url.pathname = '/home'
+  //     return NextResponse.redirect(url)
+  //   }
 
-    // Redirect authenticated users away from auth pages to home
-    if (user && (request.nextUrl.pathname.startsWith('/auth/login') || request.nextUrl.pathname.startsWith('/auth/signup'))) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/home'
-      return NextResponse.redirect(url)
-    }
-  } catch (error) {
-    // If auth check fails, allow the request to continue
-    // Client-side components will handle auth errors
-    console.error('Middleware auth check error:', error)
-  }
+  //   // Redirect authenticated users away from auth pages to home
+  //   if (user && (request.nextUrl.pathname.startsWith('/auth/login') || request.nextUrl.pathname.startsWith('/auth/signup'))) {
+  //     const url = request.nextUrl.clone()
+  //     url.pathname = '/home'
+  //     return NextResponse.redirect(url)
+  //   }
+  // } catch (error) {
+  //   // If auth check fails, allow the request to continue
+  //   // Client-side components will handle auth errors
+  //   console.error('Middleware auth check error:', error)
+  // }
 
   return supabaseResponse
 }

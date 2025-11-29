@@ -17,8 +17,16 @@ export default function SuccessPage() {
   }, [router])
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full text-center">
+    <div className="relative min-h-screen flex items-center justify-center py-12 px-4">
+      <div 
+        className="fixed inset-0 -z-10"
+        style={{ 
+          background: 'linear-gradient(135deg, #d4f1f9 0%, #f8e8f0 35%, #fdf6e9 65%, #f5e6e0 100%)',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      <div className="max-w-md w-full text-center relative z-10">
         <div className="mb-8">
           <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
             <svg
@@ -35,10 +43,10 @@ export default function SuccessPage() {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-[#1a1a2e] mb-2">
             Mood logged successfully!
           </h1>
-          <p className="text-gray-600">
+          <p className="text-[#4a4a6a]">
             Your entry has been saved. Keep tracking to discover your patterns.
           </p>
         </div>
@@ -46,20 +54,23 @@ export default function SuccessPage() {
         <div className="space-y-4">
           <Link
             href="/home"
-            className="block w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+            className="block w-full rounded-[24px] px-6 py-3.5 text-base font-semibold text-white shadow-[0_4px_16px_rgba(124,58,237,0.3)] transition-all hover:scale-105"
+            style={{
+              background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)',
+            }}
           >
             Return to Home
           </Link>
 
           <Link
-            href="/mood"
-            className="block w-full bg-white text-indigo-600 py-3 px-4 rounded-lg font-medium border border-indigo-600 hover:bg-indigo-50 transition-colors"
+            href="/mood/new"
+            className="block w-full rounded-[24px] border-2 border-black/10 bg-white px-6 py-3.5 text-base font-semibold text-[#1a1a2e] transition-all hover:bg-gray-50"
           >
             Log Another Mood
           </Link>
         </div>
 
-        <p className="mt-6 text-sm text-gray-500">
+        <p className="mt-6 text-sm text-[#4a4a6a]">
           Redirecting to home in a few seconds...
         </p>
       </div>

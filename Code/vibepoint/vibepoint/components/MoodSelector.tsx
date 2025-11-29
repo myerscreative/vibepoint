@@ -57,7 +57,7 @@ const MoodSelector = ({
   // Load gradient image into hidden canvas for pixel sampling
   useEffect(() => {
     const img = new window.Image();
-    img.src = '/emotion_gradient.png';
+    img.src = '/emotion_gradent_v2.jpg';
     
     img.onload = () => {
       if (canvasRef.current) {
@@ -196,7 +196,7 @@ const MoodSelector = ({
             <div 
               className={`relative w-full aspect-square rounded-[40px] overflow-hidden cursor-crosshair shadow-lg ${gradientClassName}`}
               style={{
-                backgroundImage: 'url(/emotion_gradient.png)',
+                backgroundImage: 'url(/emotion_gradent_v2.jpg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

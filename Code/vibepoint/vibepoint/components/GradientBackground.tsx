@@ -3,11 +3,14 @@
 export function GradientBackground() {
   return (
     <>
-      {/* Main soft gradient background - light cyan/pink/cream/peach */}
+      {/* Main gradient background using emotion_gradent_v2.jpg */}
       <div 
         className="fixed inset-0 -z-20"
         style={{
-          background: 'linear-gradient(135deg, #d4f1f9 0%, #f8e8f0 35%, #fdf6e9 65%, #f5e6e0 100%)',
+          backgroundImage: 'url(/emotion_gradent_v2.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'fixed'
         }}
       />

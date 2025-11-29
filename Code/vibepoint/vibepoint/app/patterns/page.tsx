@@ -39,7 +39,7 @@ export default function PatternsPage() {
       if (!user) {
         console.warn('No user found - showing empty patterns for development')
         setEntries([])
-        setPatterns(null)
+        setPatterns([])
         setInsights([])
         setLoading(false)
         return
@@ -50,7 +50,7 @@ export default function PatternsPage() {
       console.error('Auth check failed:', error)
       // Continue without user in development
       setEntries([])
-      setPatterns(null)
+      setPatterns([])
       setInsights([])
     } finally {
       setLoading(false)

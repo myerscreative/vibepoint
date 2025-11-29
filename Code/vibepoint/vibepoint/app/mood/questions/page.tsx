@@ -309,8 +309,11 @@ export default function QuestionsPage() {
             <label className="block text-lg font-semibold mb-2">
               What are you focusing on?
             </label>
-            <p className="text-sm text-[var(--color-text-soft)] mb-3">
+            <p className="text-sm text-[var(--color-text-soft)] mb-1">
               What thoughts, situations, or concerns have your attention?
+            </p>
+            <p className="text-sm text-[var(--color-text-soft)] mb-3">
+              If you notice any images or scenarios, include those too.
             </p>
             <textarea
               value={formData.focus}

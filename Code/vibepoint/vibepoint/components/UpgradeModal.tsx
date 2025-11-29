@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface UpgradeModalProps {
   isOpen: boolean
@@ -9,6 +10,7 @@ interface UpgradeModalProps {
 
 export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
   const [selectedPlan, setSelectedPlan] = useState<'yearly' | 'monthly'>('yearly')
+  const router = useRouter()
 
   useEffect(() => {
     if (!isOpen) return
@@ -116,27 +118,30 @@ export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                   : 'border-black/10 bg-white'
               }`}
             >
-              <span className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-pro-primary to-pro-secondary px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-white shadow-md">
+              <span 
+                className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-white shadow-md"
+                style={{ background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)' }}
+              >
                 Most Popular
               </span>
-              <div className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-text-secondary">
+              <div className="mt-4 text-[0.7rem] font-semibold uppercase tracking-wide text-text-secondary">
                 Yearly
               </div>
               <div className="mt-1 font-display text-xl font-semibold text-text-primary">
-                $39
+                $59
                 <span className="ml-1 align-middle text-xs font-normal text-text-secondary">
                   /year
                 </span>
               </div>
               <div className="mt-0.5 text-[0.7rem] font-semibold text-emerald-600">
-                Save 35%
+                Save 38%
               </div>
             </button>
 
             <button
               type="button"
               onClick={() => setSelectedPlan('monthly')}
-              className={`rounded-2xl border-2 p-3 text-left transition-colors ${
+              className={`rounded-2xl border-2 p-3 text-center transition-colors ${
                 selectedPlan === 'monthly'
                   ? 'border-pro-primary bg-gradient-to-b from-[#fff5f8] to-white'
                   : 'border-black/10 bg-white'
@@ -146,7 +151,7 @@ export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 Monthly
               </div>
               <div className="mt-1 font-display text-xl font-semibold text-text-primary">
-                $4.99
+                $7.99
                 <span className="ml-1 align-middle text-xs font-normal text-text-secondary">
                   /mo
                 </span>
@@ -159,8 +164,12 @@ export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
           <button
             type="button"
-            className="w-full rounded-2xl bg-gradient-to-r from-pro-primary to-pro-secondary px-6 py-3 text-base font-semibold text-white shadow-[0_4px_20px_rgba(199,21,133,0.35)] transition-transform hover:-translate-y-0.5"
-            onClick={onClose}
+            className="w-full rounded-2xl px-6 py-3 text-base font-semibold text-white shadow-[0_4px_20px_rgba(192,38,211,0.3)] transition-transform hover:-translate-y-0.5"
+            style={{ background: 'linear-gradient(45deg, #7c3aed 0%, #c026d3 50%, #f97316 100%)' }}
+            onClick={() => {
+              onClose()
+              router.push('/auth/signup')
+            }}
           >
             Start 7-Day Free Trial
           </button>

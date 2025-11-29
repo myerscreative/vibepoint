@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import GradientSelector from '@/components/GradientSelector'
 import { MoodCoordinates } from '@/types'
 
@@ -31,6 +32,19 @@ export default function MoodPage() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] py-12 px-4 flex flex-col items-center">
       <div className="w-full max-w-2xl">
+        {/* Navigation */}
+        <div className="mb-6 w-full">
+          <Link
+            href="/home"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)] hover:text-[var(--color-text)] transition-colors"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+        
         <GradientSelector onMoodSelect={handleMoodSelect} selectedMood={coordinates || undefined} />
 
         <div className="mt-8 max-w-md mx-auto">

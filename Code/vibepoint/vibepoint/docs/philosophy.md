@@ -1,30 +1,55 @@
 # The VibePoint Philosophy
 
-Most apps ask you to record how you feel.  
-VibePoint asks you to transform it.
 
-Labeling your emotion isn’t enough.  
-Re-reading the story of a rough day is even worse.
 
-You don’t need a diary of low moments.  
-You need tools to shift your state.
+Most apps ask you to label how you feel.  
 
-At VibePoint, we believe:
+VibePoint helps you understand why you feel it.
 
-- Emotions follow patterns  
-- Patterns can be identified  
-- Patterns can be changed  
-- And changed patterns change your life  
 
-We help you separate every emotion into the three ingredients that create it:
 
-- your focus  
-- your self-talk  
-- your physiology  
+You don't need to track emotional labels —  
 
-Because once you see the ingredients, you can change the recipe.
+you need to reveal emotional patterns.
 
-VibePoint isn’t a mood tracker.  
-It’s a clarity tool, a pattern detector, a state-training partner.
 
-Emotional mastery made simple.
+
+Every emotion has three ingredients:
+
+
+
+- **Your focus** (what your mind is locked onto)  
+
+- **Your self-talk**  
+
+- **Your physiology**  
+
+
+
+Inside your focus may be imagery or mental scenarios —  
+
+but not everyone identifies as a "visual thinker,"  
+
+so we start with the universal question:
+
+
+
+> **What is your mind focused on right now?**  
+
+> *(If you notice any images or scenarios, include those too.)*
+
+
+
+VibePoint is not a mood diary.  
+
+It's a clarity tool.  
+
+A state-mastery system.  
+
+A pattern detector.  
+
+A training partner for emotional strength.
+
+
+
+We believe emotional mastery is available to anyone who learns the ingredients behind their state.

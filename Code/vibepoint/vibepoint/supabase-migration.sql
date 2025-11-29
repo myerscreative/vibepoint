@@ -25,6 +25,13 @@ CREATE TABLE IF NOT EXISTS mood_entries (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Ensure emotion_name column exists (for existing tables)
+ALTER TABLE mood_entries 
+ADD COLUMN IF NOT EXISTS emotion_name TEXT;
+
+-- Add comment for documentation
+COMMENT ON COLUMN mood_entries.emotion_name IS 'User-provided name for the emotion/mood (from dropdown or custom input)';
+
 -- ============================================
 -- Patterns table (for cached insights)
 -- ============================================

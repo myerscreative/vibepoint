@@ -102,8 +102,8 @@ export default function OnboardingPage() {
               <h1 className="slide-title">Welcome to Vibepoint</h1>
               <p className="slide-subtitle">Understand and control your emotional states</p>
               <p className="slide-body">
-                Vibepoint helps you discover the patterns between what you focus on, 
-                what you tell yourself, and how you feel physically. By tracking these 
+                Vibepoint helps you discover the patterns between what you focus on,
+                what you tell yourself, and how you feel physically. By tracking these
                 connections, you&apos;ll learn to create the moods you want.
               </p>
             </div>

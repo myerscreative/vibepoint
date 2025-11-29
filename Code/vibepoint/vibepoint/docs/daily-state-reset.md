@@ -1,50 +1,75 @@
-# VibePoint — Daily State Reset (Tony Robbins Style)
+# VibePoint — Daily State Reset
+
+
 
 ## The Daily State Reset: 60 Seconds to Power
 
-Use this exercise anytime to reset your emotional state.
+
+
+Use this exercise anytime to regain clarity.
+
+
 
 ---
 
-### Step 1 — Break the Pattern (10 seconds)
-Stand up.  
-Shake out your body.  
-Shift your breath.  
-Change your physical energy immediately.
+
+
+### Step 1 — Break the Pattern (10s)
+
+Change your body.  
+
+Shake out tension.  
+
+Shift your breath.
+
+
 
 ---
 
-### Step 2 — Redirect Your Focus (15 seconds)
-Answer one question:
-**“What is one thing I can influence right now?”**
 
-Your focus determines your feeling.
+
+### Step 2 — Redirect Your Focus (15s)
+
+Ask yourself:  
+
+**"What is my mind focused on right now?"**  
+
+*(If images or scenarios appear, notice them too.)*
+
+
+
+Pick a more useful focus.
+
+
+
+---
+
+
+
+### Step 3 — Upgrade Your Inner Voice (15s)
+
+Change the tone and wording of your internal dialogue.
+
+
 
 ---
 
-### Step 3 — Upgrade Your Inner Voice (15 seconds)
-Say to yourself:
-**“I can handle this. I’ve handled things like this before.”**
 
-Slow the tone.  
-Make it strong.  
-Make it yours.
 
----
+### Step 4 — Align Physiology (20s)
 
-### Step 4 — Align Physiology (20 seconds)
-Take one slow breath in…  
-hold…  
-and exhale with strength.
+Open your posture.  
 
-Open your chest.  
-Lift your posture.  
-Shift your physical presence.
+Deepen your breath.  
+
+Shift your physical energy.
+
+
 
 ---
+
+
 
 ## Result
-Your emotional state shifts instantly.  
-Use this whenever you need clarity, strength, or momentum.
 
-VibePoint helps you make this a daily habit.
+State shifts fast when ingredients change.

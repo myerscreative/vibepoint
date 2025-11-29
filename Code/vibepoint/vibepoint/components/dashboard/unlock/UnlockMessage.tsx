@@ -37,7 +37,7 @@ const UnlockMessage: React.FC<UnlockMessageProps> = React.memo(({ totalEntries }
           className="h-full rounded-full"
           style={{ 
             width: `${progress}%`,
-            background: 'linear-gradient(90deg, #f97316, #c026d3, #7c3aed)'
+            background: 'linear-gradient(90deg, #7c3aed, #c026d3, #f97316)'
           }}
         />
       </div>

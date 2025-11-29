@@ -6,7 +6,7 @@ import Link from 'next/link'
 // Four corner colors - EXACT from app
 const corners = {
   topLeft: { r: 180, g: 220, b: 255 }, // Soft sky blue - Happy + Unmotivated
-  topRight: { r: 255, g: 240, b: 50 }, // Bright golden yellow - Happy + Motivated
+  topRight: { r: 245, g: 166, b: 35 }, // Bright orange - Happy + Motivated (#F5A623)
   bottomLeft: { r: 40, g: 35, b: 45 }, // Dark grey-purple - Unhappy + Unmotivated
   bottomRight: { r: 255, g: 20, b: 0 }, // Intense red - Unhappy + Motivated
 }
@@ -156,9 +156,22 @@ export default function TutorialPage() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[720px] px-5 pb-[60px] pt-6 md:max-w-[800px] md:px-8 md:pb-[100px] md:pt-12">
+        {/* Navigation */}
+        <div className="mb-8">
+          <Link
+            href="/home"
+            className="inline-flex items-center gap-2 rounded-[24px] border-2 border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Back to Home</span>
+          </Link>
+        </div>
+        
         {/* Header */}
         <header className="mb-12 text-center pt-5">
-          <div className="mb-6 font-fraunces text-xl font-semibold" style={{ background: 'linear-gradient(135deg, #f97316, #c026d3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          <div className="mb-6 font-fraunces text-xl font-semibold" style={{ background: 'linear-gradient(45deg, #7c3aed, #c026d3, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             VibePoint
           </div>
           <h1 className="mb-4 font-fraunces text-[2.5rem] font-semibold leading-tight text-[#1a1a2e] md:text-[3rem] lg:text-[3.2rem]">
@@ -215,7 +228,7 @@ export default function TutorialPage() {
 
         {/* Step 1 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             1
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -311,7 +324,7 @@ export default function TutorialPage() {
 
         {/* Step 2 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             2
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -350,7 +363,7 @@ export default function TutorialPage() {
 
         {/* Step 3 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             3
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -392,7 +405,7 @@ export default function TutorialPage() {
 
         {/* Step 4 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             4
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -442,7 +455,7 @@ export default function TutorialPage() {
 
         {/* Step 5 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             5
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -469,7 +482,7 @@ export default function TutorialPage() {
 
         {/* Step 6 */}
         <div className="mb-5 mt-14 flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f97316] to-[#c026d3] text-xl font-bold text-white shadow-[0_4px_15px_rgba(249,115,22,0.3)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#f97316] text-xl font-bold text-white shadow-[0_4px_15px_rgba(124,58,237,0.3)]">
             6
           </div>
           <h2 className="mb-0 font-fraunces text-2xl font-semibold text-[#1a1a2e] md:text-[1.8rem]">
@@ -520,7 +533,7 @@ export default function TutorialPage() {
           </p>
           <Link
             href="/mood/new"
-            className="inline-block rounded-[50px] bg-gradient-to-r from-[#f97316] via-[#c026d3] to-[#7c3aed] px-9 py-[18px] font-outfit text-lg font-semibold text-white shadow-[0_8px_30px_rgba(192,38,211,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(192,38,211,0.4)]"
+            className="inline-block rounded-[50px] bg-gradient-to-r from-[#7c3aed] via-[#c026d3] to-[#f97316] px-9 py-[18px] font-outfit text-lg font-semibold text-white shadow-[0_8px_30px_rgba(192,38,211,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(192,38,211,0.4)]"
           >
             Start Tracking Now
           </Link>
