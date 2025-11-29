@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
-import { getRecipe, toggleRecipeFavorite, deleteRecipe, incrementRecipeUseCount } from '@/lib/db';
+import { getRecipe, toggleRecipeFavorite, deleteRecipe } from '@/lib/db';
+import { checkProStatus } from '@/lib/pro-tier-server';
 
 /**
  * GET /api/recipes/[id]
  *
- * Get a specific recipe
+ * Get a specific recipe (Pro feature)
  */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   try {
     const supabase = await createServerSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -22,7 +25,14 @@ export async function GET(
       );
     }
 
-    const { id } = await params;
+    // Check Pro status
+    const proStatus = await checkProStatus();
+    if (!proStatus.isPro) {
+      return NextResponse.json(
+        { error: 'Recipes are a Pro feature. Please upgrade to access.' },
+        { status: 403 }
+      );
+    }
     const { data, error } = await getRecipe(id);
 
     if (error || !data) {
@@ -53,12 +63,14 @@ export async function GET(
 /**
  * PATCH /api/recipes/[id]
  *
- * Update a recipe (favorite status, usage count)
+ * Update a recipe (favorite status, usage count) - Pro feature
  */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   try {
     const supabase = await createServerSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -70,16 +82,20 @@ export async function PATCH(
       );
     }
 
-    const { id } = await params;
+    // Check Pro status
+    const proStatus = await checkProStatus();
+    if (!proStatus.isPro) {
+      return NextResponse.json(
+        { error: 'Recipes are a Pro feature. Please upgrade to access.' },
+        { status: 403 }
+      );
+    }
     const body = await request.json();
     const { action } = body;
 
     if (action === 'favorite') {
       const { isFavorite } = body;
       const { error } = await toggleRecipeFavorite(id, isFavorite);
-      if (error) throw error;
-    } else if (action === 'increment_use') {
-      const { error } = await incrementRecipeUseCount(id);
       if (error) throw error;
     } else {
       return NextResponse.json(
@@ -101,12 +117,14 @@ export async function PATCH(
 /**
  * DELETE /api/recipes/[id]
  *
- * Delete a recipe
+ * Delete a recipe (Pro feature)
  */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   try {
     const supabase = await createServerSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -118,7 +136,14 @@ export async function DELETE(
       );
     }
 
-    const { id } = await params;
+    // Check Pro status
+    const proStatus = await checkProStatus();
+    if (!proStatus.isPro) {
+      return NextResponse.json(
+        { error: 'Recipes are a Pro feature. Please upgrade to access.' },
+        { status: 403 }
+      );
+    }
     const { error } = await deleteRecipe(id);
 
     if (error) {
