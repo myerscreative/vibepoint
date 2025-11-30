@@ -22,11 +22,12 @@ export default function HomePage() {
   useEffect(() => {
     // Check auth and load stats
     const loadData = async () => {
-      const user = await getCurrentUser();
-      if (!user) {
-        router.push('/');
-        return;
-      }
+      // AUTH DISABLED FOR DEVELOPMENT
+      // const user = await getCurrentUser();
+      // if (!user) {
+      //   router.push('/');
+      //   return;
+      // }
 
       // Get mood entries
       const { data } = await getMoodEntries();
