@@ -43,22 +43,16 @@ export default function SignupPage() {
         return
       }
 
-      // Check if email confirmation is required
-      if (data.user && !data.session) {
-        setError('Please check your email to confirm your account before signing in.')
-        setLoading(false)
+      // For development: bypass email confirmation entirely
+      if (data.user) {
+        // User created successfully - bypass auth and go to onboarding
+        console.log('User created, bypassing auth for dev mode')
+        router.push('/onboarding')
         return
       }
 
-      // User is signed in (no email confirmation required or already confirmed)
-      if (data.session) {
-        await supabase.auth.getSession()
-        await new Promise(resolve => setTimeout(resolve, 100))
-        router.push('/onboarding')
-      } else {
-        setError('Account created, but unable to sign in. Please check your email for confirmation.')
-        setLoading(false)
-      }
+      setError('Failed to create user account')
+      setLoading(false)
     } catch (err: any) {
       setError(err?.message || 'An unexpected error occurred')
       setLoading(false)
