@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Recipe } from '@/types';
@@ -34,7 +34,7 @@ const sampleRecipe = {
   why_this_works: "Your past entries show that confidence appears when you're breathing deeply, standing tall, and focusing on your preparation rather than outcomes.",
 };
 
-export default function RecipePlayerPage() {
+function RecipePlayerContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const recipeId = searchParams?.get('id');
@@ -365,5 +365,17 @@ export default function RecipePlayerPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function RecipePlayerPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="text-lg text-gray-700">Loading recipe...</div>
+      </main>
+    }>
+      <RecipePlayerContent />
+    </Suspense>
   );
 }
