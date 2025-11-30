@@ -111,7 +111,7 @@ export default function DeepDivePage() {
           <header className="header flex justify-between items-center pb-5">
             <Link 
               href="/home"
-              className="flex items-center gap-2 bg-white/70 border border-black/8 text-text-secondary px-4 py-2 rounded-full text-sm font-medium backdrop-blur-md transition-all hover:bg-white/90 hover:text-text-primary hover:-translate-x-0.5"
+              className="flex items-center gap-2 bg-white/70 border border-black/8 text-gray-700 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-md transition-all hover:bg-white/90 hover:text-gray-900 hover:-translate-x-0.5"
             >
               <svg viewBox="0 0 24 24" width="18" height="18">
                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
@@ -124,10 +124,10 @@ export default function DeepDivePage() {
           {/* Hero */}
           <section className="hero text-center py-10 md:py-12 lg:py-14">
             <div className="hero-icon text-5xl md:text-6xl lg:text-7xl mb-4 inline-block">🧠</div>
-            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-text-primary mb-3 leading-tight">
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 mb-3 leading-tight">
               Understanding Your Emotional Patterns
             </h1>
-            <p className="text-lg md:text-xl text-text-secondary font-normal leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 font-normal leading-relaxed">
               Your moods aren&apos;t random. They&apos;re created by three ingredients you can observe and adjust.
             </p>
           </section>
@@ -137,13 +137,13 @@ export default function DeepDivePage() {
             
             {/* Introduction */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 Why Emotions Feel Confusing
               </h2>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Most of the time, emotional states feel like one undifferentiated experience. You just &quot;feel stressed&quot; or &quot;feel good&quot; without understanding what&apos;s actually creating that state.
               </p>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 This happens because your brain fuses three separate elements together:
               </p>
               <ul className="my-4 ml-6 leading-loose">
@@ -151,7 +151,7 @@ export default function DeepDivePage() {
                 <li><strong style={{ color: '#c026d3' }}>Internal dialogue</strong> (what you&apos;re telling yourself)</li>
                 <li><strong style={{ color: '#f97316' }}>Physical sensations</strong> (what your body is doing)</li>
               </ul>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 When these are blended, you can&apos;t see which ingredient is driving the intensity. You just feel the result.
               </p>
             </section>
@@ -169,7 +169,7 @@ export default function DeepDivePage() {
                   borderBottomLeftRadius: '0.75rem'
                 }}
               >
-                <p className="text-lg leading-relaxed text-text-primary font-medium">
+                <p className="text-lg leading-relaxed text-gray-900 font-medium">
                   But once you separate them, you gain clarity. And clarity gives you options.
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function DeepDivePage() {
                       <path d="M18,45 Q28,55 38,40 Q48,60 58,45 Q68,65 78,50 Q88,70 93,45" stroke="#c026d3" strokeWidth="1.6" fill="none" opacity="0.4" strokeLinecap="round"/>
                     </svg>
                   </div>
-                  <p className="text-sm md:text-base text-text-primary text-center font-medium">Emotionally stuck and out of control</p>
+                  <p className="text-sm md:text-base text-gray-900 text-center font-medium">Emotionally stuck and out of control</p>
                   {/* Red X icon */}
                   <div className="absolute bottom-2 right-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -207,7 +207,7 @@ export default function DeepDivePage() {
                 </div>
                 
                 {/* Arrow - bolder and centered */}
-                <div className="text-4xl md:text-5xl text-text-primary font-bold my-4 md:my-0" style={{ fontWeight: 700 }}>→</div>
+                <div className="text-4xl md:text-5xl text-gray-900 font-bold my-4 md:my-0" style={{ fontWeight: 700 }}>→</div>
                 
                 {/* Separated - Grouped Strings */}
                 <div className="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-black/10 flex flex-col items-center relative">
@@ -232,7 +232,7 @@ export default function DeepDivePage() {
                       <line x1="5" y1="90" x2="95" y2="90" stroke="#f97316" strokeWidth="2.2" strokeLinecap="round" opacity="0.7"/>
                     </svg>
                   </div>
-                  <p className="text-sm md:text-base text-text-primary text-center font-medium">Clarity that leads to control</p>
+                  <p className="text-sm md:text-base text-gray-900 text-center font-medium">Clarity that leads to control</p>
                   {/* Green checkmark icon */}
                   <div className="absolute bottom-2 right-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -242,7 +242,7 @@ export default function DeepDivePage() {
                 </div>
               </div>
               
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-6 md:mb-8">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-6 md:mb-8">
                 The Three Ingredients of Every Emotional State
               </h2>
               
@@ -256,15 +256,15 @@ export default function DeepDivePage() {
                     >
                       1
                     </div>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-text-primary">Focus</h3>
+                    <h3 className="font-display text-xl md:text-2xl font-semibold text-gray-900">Focus</h3>
                   </div>
-                  <p className="text-sm text-text-secondary mb-3 font-medium">What you&apos;re mentally picturing</p>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary mb-4 flex-grow">
+                  <p className="text-sm text-gray-700 mb-3 font-medium">What you&apos;re mentally picturing</p>
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900 mb-4 flex-grow">
                     Your mind constantly generates images: future scenarios, memories, possibilities, fears. The characteristics of these images (brightness, size, distance, motion) directly influence emotional intensity.
                   </p>
                   <div className="bg-black/3 rounded-xl p-4 mt-auto">
-                    <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Example</div>
-                    <p className="text-sm leading-relaxed text-text-primary italic">
+                    <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Example</div>
+                    <p className="text-sm leading-relaxed text-gray-900 italic">
                       Imagining a close, bright, fast-moving scene of tomorrow&apos;s presentation creates different feelings than picturing it small, distant, and still.
                     </p>
                   </div>
@@ -279,15 +279,15 @@ export default function DeepDivePage() {
                     >
                       2
                     </div>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-text-primary">Language</h3>
+                    <h3 className="font-display text-xl md:text-2xl font-semibold text-gray-900">Language</h3>
                   </div>
-                  <p className="text-sm text-text-secondary mb-3 font-medium">Your internal dialogue</p>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary mb-4 flex-grow">
+                  <p className="text-sm text-gray-700 mb-3 font-medium">Your internal dialogue</p>
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900 mb-4 flex-grow">
                     The words you use internally and their tonality shape your emotional experience. &quot;This is challenging&quot; creates a different state than &quot;This is impossible.&quot; The pace, volume, and voice quality matter as much as the words.
                   </p>
                   <div className="bg-black/3 rounded-xl p-4 mt-auto">
-                    <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Example</div>
-                    <p className="text-sm leading-relaxed text-text-primary italic">
+                    <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Example</div>
+                    <p className="text-sm leading-relaxed text-gray-900 italic">
                       &quot;I&apos;m figuring this out&quot; (calm, steady tone) versus &quot;What if I can&apos;t handle this?&quot; (fast, sharp tone).
                     </p>
                   </div>
@@ -302,15 +302,15 @@ export default function DeepDivePage() {
                     >
                       3
                     </div>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-text-primary">Physiology</h3>
+                    <h3 className="font-display text-xl md:text-2xl font-semibold text-gray-900">Physiology</h3>
                   </div>
-                  <p className="text-sm text-text-secondary mb-3 font-medium">What your body is doing</p>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary mb-4 flex-grow">
+                  <p className="text-sm text-gray-700 mb-3 font-medium">What your body is doing</p>
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900 mb-4 flex-grow">
                     Breathing patterns, muscle tension, posture, heart rate, and facial expressions don&apos;t just reflect emotion—they generate it. Your physical state is the foundation of your emotional state.
                   </p>
                   <div className="bg-black/3 rounded-xl p-4 mt-auto">
-                    <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Example</div>
-                    <p className="text-sm leading-relaxed text-text-primary italic">
+                    <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Example</div>
+                    <p className="text-sm leading-relaxed text-gray-900 italic">
                       Shallow breathing with raised shoulders produces different feelings than slow, deep breathing with relaxed shoulders.
                     </p>
                   </div>
@@ -320,10 +320,10 @@ export default function DeepDivePage() {
 
             {/* How Separation Creates Control */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 How Separation Creates Control
               </h2>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 When you log a mood in Vibepoint, you&apos;re prompted to identify each ingredient separately:
               </p>
               <ul className="my-4 ml-6 leading-loose">
@@ -331,39 +331,39 @@ export default function DeepDivePage() {
                 <li>What were you telling yourself?</li>
                 <li>What physical sensations were present?</li>
               </ul>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 This simple act of separation does two things:
               </p>
               
               <div className="flex flex-col gap-4 my-6">
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">1️⃣</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     <strong>It breaks the fusion.</strong> The overwhelming &quot;emotional blob&quot; becomes three distinct, observable elements.
                   </p>
                 </div>
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">2️⃣</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     <strong>It creates pattern data.</strong> Over time, you&apos;ll see which combinations consistently produce which states.
                   </p>
                 </div>
               </div>
 
-              <p className="text-base leading-relaxed text-text-primary mt-6">
+              <p className="text-base leading-relaxed text-gray-900 mt-6">
                 This is how you develop emotional literacy: recognizing the structure of your states, not just experiencing them.
               </p>
             </section>
 
             {/* Mood Shifts Section */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 Track Your Mood Shifts, Not Just Your Moods
               </h2>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Your emotional state isn&apos;t fixed—it shifts throughout the day. And those shifts are where the learning happens.
               </p>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 You might feel:
               </p>
               <ul className="my-4 ml-6 leading-loose">
@@ -372,42 +372,42 @@ export default function DeepDivePage() {
                 <li>Drained at 3pm after meetings</li>
                 <li>Calm at 8pm after exercise</li>
               </ul>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Each shift reveals what changed in your three ingredients.
               </p>
               
               <div className="bg-gradient-to-br from-accent-magenta/8 to-accent-purple/8 border-l-4 border-accent-magenta p-5 md:p-6 rounded-xl my-6">
-                <p className="text-lg leading-relaxed text-text-primary font-medium">
+                <p className="text-lg leading-relaxed text-gray-900 font-medium">
                   Log whenever you want throughout the day. Vibepoint automatically recognizes when your mood has shifted and shows you what changed.
                 </p>
               </div>
 
-              <p className="text-base leading-relaxed text-text-primary mt-6 mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mt-6 mb-4">
                 When you track these transitions, you discover:
               </p>
               
               <div className="flex flex-col gap-4 my-6">
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">✨</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     Which activities, thoughts, or physical changes shift your state upward
                   </p>
                 </div>
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">⚠️</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     What triggers downward shifts (and how to recognize them early)
                   </p>
                 </div>
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">⏱️</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     Which states are temporary versus which ones linger
                   </p>
                 </div>
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl transition-all hover:bg-white/80 hover:translate-x-1">
                   <span className="text-2xl flex-shrink-0">📊</span>
-                  <p className="text-sm md:text-base leading-relaxed text-text-primary">
+                  <p className="text-sm md:text-base leading-relaxed text-gray-900">
                     Your natural rhythms and energy patterns
                   </p>
                 </div>
@@ -416,27 +416,27 @@ export default function DeepDivePage() {
 
             {/* Example */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 Example: Deconstructing a State
               </h2>
               
               <div className="bg-gradient-to-br from-[var(--focus-color)]/8 to-accent-magenta/8 rounded-3xl p-6 my-7">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">😰</span>
-                  <h3 className="font-display text-xl font-semibold text-text-primary">Before Separation</h3>
+                  <h3 className="font-display text-xl font-semibold text-gray-900">Before Separation</h3>
                 </div>
-                <p className="text-base leading-relaxed text-text-primary">&quot;I just feel anxious. I don&apos;t know why.&quot;</p>
+                <p className="text-base leading-relaxed text-gray-900">&quot;I just feel anxious. I don&apos;t know why.&quot;</p>
               </div>
 
               <div className="bg-gradient-to-br from-[var(--focus-color)]/8 to-accent-magenta/8 rounded-3xl p-6 my-7">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">🔍</span>
-                  <h3 className="font-display text-xl font-semibold text-text-primary">After Separation</h3>
+                  <h3 className="font-display text-xl font-semibold text-gray-900">After Separation</h3>
                 </div>
                 
                 <div className="mb-5">
-                  <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Focus</div>
-                  <p className="text-base leading-relaxed text-text-primary">
+                  <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Focus</div>
+                  <p className="text-base leading-relaxed text-gray-900">
                     Replaying a conversation from earlier, imagining worst-case outcomes
                   </p>
                 </div>
@@ -444,8 +444,8 @@ export default function DeepDivePage() {
                 <div className="h-px bg-black/10 my-5"></div>
                 
                 <div className="mb-5">
-                  <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Language</div>
-                  <p className="text-base leading-relaxed text-text-primary">
+                  <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Language</div>
+                  <p className="text-base leading-relaxed text-gray-900">
                     &quot;They probably think I&apos;m incompetent&quot; (critical, fast-paced tone)
                   </p>
                 </div>
@@ -453,28 +453,28 @@ export default function DeepDivePage() {
                 <div className="h-px bg-black/10 my-5"></div>
                 
                 <div>
-                  <div className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Physiology</div>
-                  <p className="text-base leading-relaxed text-text-primary">
+                  <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Physiology</div>
+                  <p className="text-base leading-relaxed text-gray-900">
                     Tight chest, shallow breathing, tense jaw
                   </p>
                 </div>
               </div>
 
-              <p className="text-base leading-relaxed text-text-primary mt-6 mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mt-6 mb-4">
                 Now you have specific information. And specific information gives you specific interventions.
               </p>
 
-              <p className="text-base leading-relaxed text-text-primary font-medium" style={{ color: 'var(--accent-magenta)' }}>
+              <p className="text-base leading-relaxed text-gray-900 font-medium" style={{ color: 'var(--accent-magenta)' }}>
                 Adjust any one ingredient, and the state shifts.
               </p>
             </section>
 
             {/* What You'll Learn */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 What You&apos;ll Learn Over Time
               </h2>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 After logging your moods and mood shifts, Vibepoint shows you:
               </p>
               
@@ -484,8 +484,8 @@ export default function DeepDivePage() {
                     1
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-text-primary mb-1.5">Recurring Patterns</h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-1.5">Recurring Patterns</h4>
+                    <p className="text-sm leading-relaxed text-gray-700">
                       Which thoughts, self-talk, and physical states correlate with which moods
                     </p>
                   </div>
@@ -496,8 +496,8 @@ export default function DeepDivePage() {
                     2
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-text-primary mb-1.5">Your Triggers</h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-1.5">Your Triggers</h4>
+                    <p className="text-sm leading-relaxed text-gray-700">
                       What you were focusing on during low-energy or high-stress states
                     </p>
                   </div>
@@ -508,8 +508,8 @@ export default function DeepDivePage() {
                     3
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-text-primary mb-1.5">Your Resources</h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-1.5">Your Resources</h4>
+                    <p className="text-sm leading-relaxed text-gray-700">
                       What conditions reliably produce your best states
                     </p>
                   </div>
@@ -520,8 +520,8 @@ export default function DeepDivePage() {
                     4
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-text-primary mb-1.5">Physical Signals</h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-1.5">Physical Signals</h4>
+                    <p className="text-sm leading-relaxed text-gray-700">
                       Which bodily sensations predict emotional shifts
                     </p>
                   </div>
@@ -532,20 +532,20 @@ export default function DeepDivePage() {
                     5
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-text-primary mb-1.5">Transition Patterns</h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-1.5">Transition Patterns</h4>
+                    <p className="text-sm leading-relaxed text-gray-700">
                       What helps you shift from difficult states to better ones
                     </p>
                   </div>
                 </div>
               </div>
 
-              <p className="text-base leading-relaxed text-text-primary mt-6 mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mt-6 mb-4">
                 You&apos;re building a map of your own emotional patterns.
               </p>
 
               <div className="bg-gradient-to-br from-accent-magenta/8 to-accent-purple/8 border-l-4 border-accent-magenta p-5 md:p-6 rounded-xl mt-6">
-                <p className="text-lg leading-relaxed text-text-primary font-medium">
+                <p className="text-lg leading-relaxed text-gray-900 font-medium">
                   This is practical self-knowledge. Not theory—data from your own experience.
                 </p>
               </div>
@@ -553,21 +553,21 @@ export default function DeepDivePage() {
 
             {/* Why This Matters */}
             <section className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                 Why This Matters
               </h2>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Most people develop their emotional patterns unconsciously and then live inside them for years, unaware they can be observed and adjusted.
               </p>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Vibepoint makes the invisible visible.
               </p>
-              <p className="text-base leading-relaxed text-text-primary mb-4">
+              <p className="text-base leading-relaxed text-gray-900 mb-4">
                 Once you see the structure of your states, you stop being at their mercy. You become able to recognize them as they form, understand what&apos;s driving them, and make adjustments before they fully take hold.
               </p>
               
               <div className="bg-gradient-to-br from-accent-magenta/8 to-accent-purple/8 border-l-4 border-accent-magenta p-5 md:p-6 rounded-xl mt-6">
-                <p className="text-lg leading-relaxed text-text-primary font-medium">
+                <p className="text-lg leading-relaxed text-gray-900 font-medium">
                   This is the difference between reacting to your emotions and managing them.
                 </p>
               </div>
