@@ -1,25 +1,39 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
+import { Outfit, Fraunces } from "next/font/google";
 import "./globals.css";
+import BottomNavigationWrapper from "@/components/BottomNavigationWrapper";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+});
 
 export const metadata: Metadata = {
-  title: "Vibepoint - Your Personal Mood Operating System",
-  description: "Track your mood through three controllable inputs: focus, self-talk, and body. Discover patterns and learn to feel exactly how you want.",
-  manifest: "/manifest.json",
+  title: "VibePoint - Understand Your Emotional Patterns",
+  description: "Track your focus, self-talk, and physical sensations—the three ingredients that create your emotional states—and discover the patterns behind what you feel.",
+  icons: {
+    icon: '/logo-icon.svg',
+    apple: '/logo-icon.svg',
+  },
+  manifest: '/manifest.json',
+  themeColor: '#c026d3',
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
-    title: "Vibepoint",
+    statusBarStyle: 'default',
+    title: 'VibePoint',
   },
-  applicationName: "Vibepoint",
-  keywords: ["mood tracking", "emotional wellbeing", "mental health", "self-awareness", "mindfulness"],
-};
-
-export const viewport: Viewport = {
-  themeColor: "#2563EB",
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover',
+  },
 };
 
 export default function RootLayout({
@@ -29,14 +43,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Vibepoint" />
-      </head>
-      <body className="antialiased">
+      <body
+        className={`${outfit.variable} ${fraunces.variable} antialiased`}
+      >
         {children}
+        <BottomNavigationWrapper />
       </body>
     </html>
   );

@@ -1,232 +1,169 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { setOnboardingCompleted } from '@/lib/db';
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function OnboardingPage() {
-  const router = useRouter();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const router = useRouter()
 
-  const handleNext = () => {
-    if (currentSlide < 2) {
-      setCurrentSlide(currentSlide + 1);
+  const goNext = useCallback(() => {
+    if (currentSlide === 2) {
+      // Last slide - mark onboarding as complete and go to home
+      localStorage.setItem('onboardingCompleted', 'true')
+      router.push('/home')
     } else {
-      handleComplete();
+      setCurrentSlide(prev => prev + 1)
     }
-  };
+  }, [currentSlide, router])
 
-  const handleSkip = async () => {
-    await setOnboardingCompleted();
-    router.push('/home');
-  };
+  const goBack = useCallback(() => {
+    if (currentSlide > 0) {
+      setCurrentSlide(prev => prev - 1)
+    }
+  }, [currentSlide])
 
-  const handleComplete = async () => {
-    await setOnboardingCompleted();
-    router.push('/home');
-  };
+  const skipTutorial = useCallback(() => {
+    localStorage.setItem('onboardingCompleted', 'true')
+    router.push('/home')
+  }, [router])
 
-  const slides = [
-    {
-      title: "Every mood has 3 controllable inputs",
-      description: "Focus, self-talk, and body. Change these, and you change how you feel.",
-      visual: (
-        <div className="max-w-md mx-auto space-y-6">
-          {/* Three inputs visualization */}
-          <div className="bg-gradient-to-r from-blue-100 to-blue-50 rounded-2xl p-6 border-2 border-blue-300">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">🎯</div>
-              <div>
-                <h3 className="font-semibold text-blue-900">1. What you focus on</h3>
-                <p className="text-sm text-blue-700">Where your attention goes</p>
-              </div>
-            </div>
-          </div>
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        goNext()
+      } else if (e.key === 'ArrowLeft') {
+        goBack()
+      } else if (e.key === 'Escape') {
+        skipTutorial()
+      }
+    }
 
-          <div className="bg-gradient-to-r from-purple-100 to-purple-50 rounded-2xl p-6 border-2 border-purple-300">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">💭</div>
-              <div>
-                <h3 className="font-semibold text-purple-900">2. What you tell yourself</h3>
-                <p className="text-sm text-purple-700">Your inner voice</p>
-              </div>
-            </div>
-          </div>
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [goNext, goBack, skipTutorial])
 
-          <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-2xl p-6 border-2 border-green-300">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">🧘</div>
-              <div>
-                <h3 className="font-semibold text-green-900">3. What your body is doing</h3>
-                <p className="text-sm text-green-700">Posture, breathing, tension</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "From anxious → calm in 60 seconds",
-      description: "Here's how it works. You control all three inputs.",
-      visual: (
-        <div className="max-w-md mx-auto space-y-6">
-          {/* Before state */}
-          <div className="bg-red-50 rounded-2xl p-6 border-2 border-red-200">
-            <div className="text-center mb-4">
-              <span className="text-2xl">😰</span>
-              <p className="font-semibold text-red-900 mt-2">Feeling Anxious</p>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start space-x-2">
-                <span>🎯</span>
-                <span className="text-red-800">Focusing on: <em>&quot;Everything that could go wrong&quot;</em></span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span>💭</span>
-                <span className="text-red-800">Telling yourself: <em>&quot;I can&apos;t handle this&quot;</em></span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span>🧘</span>
-                <span className="text-red-800">Body: <em>Shallow breathing, tight shoulders</em></span>
-              </div>
-            </div>
-          </div>
+  // Swipe gesture handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX)
+  }
 
-          {/* Arrow */}
-          <div className="text-center">
-            <div className="text-4xl">↓</div>
-            <p className="text-xs text-gray-600 font-medium mt-1">Shift all three</p>
-          </div>
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientX)
+  }
 
-          {/* After state */}
-          <div className="bg-green-50 rounded-2xl p-6 border-2 border-green-200">
-            <div className="text-center mb-4">
-              <span className="text-2xl">😌</span>
-              <p className="font-semibold text-green-900 mt-2">Feeling Calm</p>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-start space-x-2">
-                <span>🎯</span>
-                <span className="text-green-800">Focusing on: <em>&quot;What I can control right now&quot;</em></span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span>💭</span>
-                <span className="text-green-800">Telling yourself: <em>&quot;One step at a time&quot;</em></span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span>🧘</span>
-                <span className="text-green-800">Body: <em>Deep breaths, shoulders relaxed</em></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Track your 3 inputs daily",
-      description: "Tap the gradient, answer 3 questions. Vibepoint learns your personal patterns and shows you what works.",
-      visual: (
-        <div className="max-w-md mx-auto space-y-6">
-          {/* Gradient preview */}
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden mood-gradient shadow-xl border-2 border-blue-300">
-            <div className="absolute top-1/3 right-1/3 w-10 h-10 bg-white bg-opacity-60 rounded-full flex items-center justify-center animate-pulse">
-              <div className="w-5 h-5 bg-white rounded-full"></div>
-            </div>
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
 
-            {/* Axis labels */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
-              Happy
-            </div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
-              Unhappy
-            </div>
-            <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
-              Unmotivated
-            </div>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 -rotate-90 text-white text-xs font-medium px-2 py-1 bg-black bg-opacity-30 rounded-full">
-              Motivated
-            </div>
-          </div>
-
-          {/* Three questions preview */}
-          <div className="space-y-3">
-            <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-              <p className="text-sm font-medium text-blue-900">🎯 What are you focusing on?</p>
-            </div>
-            <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
-              <p className="text-sm font-medium text-purple-900">💭 What are you telling yourself?</p>
-            </div>
-            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-              <p className="text-sm font-medium text-green-900">🧘 What sensations are you feeling in your body?</p>
-            </div>
-          </div>
-
-          {/* Value proposition */}
-          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-4 border border-yellow-200">
-            <p className="text-sm text-center text-gray-800">
-              <span className="font-semibold">After just 3 entries,</span> you&apos;ll start seeing what patterns help you feel better.
-            </p>
-          </div>
-        </div>
-      ),
-    },
-  ];
-
-  const currentSlideData = slides[currentSlide];
+    if (isLeftSwipe) {
+      goNext()
+    }
+    if (isRightSwipe) {
+      goBack()
+    }
+  }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="max-w-2xl w-full">
-        {/* Skip button */}
-        <div className="flex justify-end mb-8">
-          <button
-            onClick={handleSkip}
-            className="text-gray-600 hover:text-gray-900 font-medium text-sm transition-smooth"
-          >
-            Skip
-          </button>
-        </div>
-
-        {/* Slide content */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
-          {/* Visual */}
-          <div className="mb-8">
-            {currentSlideData.visual}
-          </div>
-
-          {/* Text content */}
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold text-gray-900">
-              {currentSlideData.title}
-            </h2>
-            <p className="text-lg text-gray-600 max-w-lg mx-auto">
-              {currentSlideData.description}
-            </p>
-          </div>
-
-          {/* Progress dots */}
-          <div className="flex justify-center space-x-2 mt-8 mb-6">
-            {slides.map((_, index) => (
-              <div
-                key={index}
-                className={`h-2 rounded-full transition-smooth ${
-                  index === currentSlide
-                    ? 'w-8 bg-blue-600'
-                    : 'w-2 bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Navigation button */}
-          <button
-            onClick={handleNext}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-smooth focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            {currentSlide < 2 ? 'Next' : 'Start Tracking'}
-          </button>
-        </div>
+    <div className="onboarding-page">
+      {/* Animated background orbs */}
+      <div className="bg-orbs">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
       </div>
-    </main>
-  );
+
+      {/* Main container */}
+      <div className="onboarding-container">
+        {/* Progress indicators */}
+        <div className="progress-dots">
+          <span className={`dot ${currentSlide === 0 ? 'active' : ''}`}></span>
+          <span className={`dot ${currentSlide === 1 ? 'active' : ''}`}></span>
+          <span className={`dot ${currentSlide === 2 ? 'active' : ''}`}></span>
+        </div>
+
+        {/* Content card */}
+        <div 
+          className="onboarding-card"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Slide 1: Welcome */}
+          {currentSlide === 0 && (
+            <div className="slide" key="slide-1">
+              <div className="slide-icon">🎨</div>
+              <h1 className="slide-title">Welcome to Vibepoint</h1>
+              <p className="slide-subtitle">Understand and control your emotional states</p>
+              <p className="slide-body">
+                Vibepoint helps you discover the patterns between what you focus on,
+                what you tell yourself, and how you feel physically. By tracking these
+                connections, you&apos;ll learn to create the moods you want.
+              </p>
+            </div>
+          )}
+
+          {/* Slide 2: How It Works */}
+          {currentSlide === 1 && (
+            <div className="slide" key="slide-2">
+              <div className="slide-icon">🔄</div>
+              <h1 className="slide-title">How It Works</h1>
+              <p className="slide-subtitle">Simple, powerful mood tracking</p>
+              <div className="slide-steps">
+                <div className="step">
+                  <span className="step-number">1</span>
+                  <p>Tap anywhere on the mood gradient to capture how you feel</p>
+                </div>
+                <div className="step">
+                  <span className="step-number">2</span>
+                  <p>Answer 3 reflective questions about your current experience</p>
+                </div>
+                <div className="step">
+                  <span className="step-number">3</span>
+                  <p>Over time, discover what creates your emotional patterns</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Slide 3: Privacy */}
+          {currentSlide === 2 && (
+            <div className="slide" key="slide-3">
+              <div className="slide-icon">🔒</div>
+              <h1 className="slide-title">Your Privacy Matters</h1>
+              <p className="slide-subtitle">Safe space for honest self-reflection</p>
+              <p className="slide-body">
+                Your mood data stays yours. We use end-to-end encryption and never 
+                share your personal insights with anyone. This is your private journey 
+                of self-discovery.
+              </p>
+            </div>
+          )}
+
+          {/* Navigation */}
+          <div className="slide-navigation">
+            {currentSlide > 0 && (
+              <button className="nav-btn nav-btn-back" onClick={goBack}>
+                Back
+              </button>
+            )}
+            <button className="nav-btn nav-btn-next" onClick={goNext}>
+              {currentSlide === 2 ? 'Get Started' : 'Next'}
+            </button>
+          </div>
+        </div>
+
+        {/* Skip link */}
+        <button className="skip-tutorial" onClick={skipTutorial}>
+          Skip tutorial
+        </button>
+      </div>
+    </div>
+  )
 }
