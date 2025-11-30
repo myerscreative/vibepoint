@@ -31,3 +31,34 @@ export const getCurrentUser = async () => {
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 };
+
+// Error handling helper
+export const handleAuthError = (error: any): string => {
+  if (!error) return 'An unknown error occurred';
+
+  // Handle Supabase auth errors
+  if (error.message) {
+    const message = error.message.toLowerCase();
+
+    if (message.includes('invalid login credentials')) {
+      return 'Invalid email or password';
+    }
+    if (message.includes('email not confirmed')) {
+      return 'Please confirm your email address';
+    }
+    if (message.includes('user already registered')) {
+      return 'An account with this email already exists';
+    }
+    if (message.includes('password should be at least')) {
+      return 'Password must be at least 6 characters';
+    }
+    if (message.includes('invalid email')) {
+      return 'Please enter a valid email address';
+    }
+
+    // Return the original message if no match
+    return error.message;
+  }
+
+  return 'An unexpected error occurred';
+};
