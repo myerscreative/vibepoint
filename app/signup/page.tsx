@@ -17,13 +17,11 @@ export default function SignupPage() {
     e.preventDefault()
     setError('')
 
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       return
     }
 
-    // Validate password length
     if (password.length < 6) {
       setError('Password must be at least 6 characters')
       return
@@ -43,18 +41,16 @@ export default function SignupPage() {
         return
       }
 
-      // For development: bypass email confirmation entirely
+      // Bypass auth - just go to onboarding
       if (data.user) {
-        // User created successfully - bypass auth and go to onboarding
-        console.log('User created, bypassing auth for dev mode')
         router.push('/onboarding')
         return
       }
 
-      setError('Failed to create user account')
+      setError('Failed to create account')
       setLoading(false)
     } catch (err: any) {
-      setError(err?.message || 'An unexpected error occurred')
+      setError(err?.message || 'An error occurred')
       setLoading(false)
     }
   }
@@ -62,20 +58,17 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#a8edea] via-[#fed6e3] via-[#fff9e6] to-[#ffd8cc] flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
             Get Started
           </h1>
           <p className="text-gray-700">
-            Create your account to begin understanding your moods
+            Create your account to begin
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white/25 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-xl">
           <form onSubmit={handleSignup} className="space-y-5">
-            {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
                 Email
@@ -86,17 +79,11 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-xl
-                         bg-white/50 backdrop-blur-sm
-                         border border-white/60
-                         text-gray-800 placeholder-gray-500
-                         focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent
-                         transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/60 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-200"
                 placeholder="your@email.com"
               />
             </div>
 
-            {/* Password Input */}
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-800 mb-2">
                 Password
@@ -107,18 +94,12 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-xl
-                         bg-white/50 backdrop-blur-sm
-                         border border-white/60
-                         text-gray-800 placeholder-gray-500
-                         focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent
-                         transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/60 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-200"
                 placeholder="••••••••"
               />
               <p className="text-xs text-gray-600 mt-1">At least 6 characters</p>
             </div>
 
-            {/* Confirm Password Input */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-800 mb-2">
                 Confirm Password
@@ -129,41 +110,26 @@ export default function SignupPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-xl
-                         bg-white/50 backdrop-blur-sm
-                         border border-white/60
-                         text-gray-800 placeholder-gray-500
-                         focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent
-                         transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/60 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-200"
                 placeholder="••••••••"
               />
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="bg-red-100/80 backdrop-blur-sm border border-red-300 text-red-700 px-4 py-3 rounded-xl text-sm">
                 {error}
               </div>
             )}
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 px-6 rounded-xl font-semibold text-gray-800 text-lg
-                       bg-white/40 backdrop-blur-md
-                       border border-white/50
-                       shadow-lg hover:shadow-xl
-                       hover:bg-white/50
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       transition-all duration-300
-                       transform hover:scale-[1.02]"
+              className="w-full py-4 px-6 rounded-xl font-semibold text-gray-800 text-lg bg-white/40 backdrop-blur-md border border-white/50 shadow-lg hover:shadow-xl hover:bg-white/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02]"
             >
               {loading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
 
-          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-400/30"></div>
@@ -175,12 +141,11 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Login Link */}
           <div className="text-center">
             <p className="text-gray-700">
               Already have an account?{' '}
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
               >
                 Log in
@@ -189,7 +154,6 @@ export default function SignupPage() {
           </div>
         </div>
 
-        {/* Back Button */}
         <button
           onClick={() => router.push('/')}
           className="w-full mt-6 py-3 text-gray-700 hover:text-gray-800 font-medium transition-colors"
