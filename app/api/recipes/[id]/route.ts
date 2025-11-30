@@ -9,9 +9,10 @@ import { getRecipe, toggleRecipeFavorite, deleteRecipe, incrementRecipeUseCount 
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json(
@@ -55,9 +56,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json(
@@ -120,9 +122,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json(
