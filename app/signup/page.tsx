@@ -38,7 +38,7 @@ export default function SignupPage() {
       })
 
       if (authError) {
-        setError(handleAuthError(authError))
+        setError(authError.message || 'Signup failed')
         setLoading(false)
         return
       }
@@ -60,7 +60,7 @@ export default function SignupPage() {
         setLoading(false)
       }
     } catch (err: any) {
-      setError(handleAuthError(err))
+      setError(err?.message || 'An unexpected error occurred')
       setLoading(false)
     }
   }

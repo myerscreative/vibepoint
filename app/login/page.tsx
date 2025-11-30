@@ -24,7 +24,7 @@ export default function LoginPage() {
       })
 
       if (authError) {
-        setError(handleAuthError(authError))
+        setError(authError.message || 'Login failed')
         setLoading(false)
         return
       }
@@ -48,7 +48,7 @@ export default function LoginPage() {
       }
       router.refresh()
     } catch (err: any) {
-      setError(handleAuthError(err))
+      setError(err?.message || 'An unexpected error occurred')
       setLoading(false)
     }
   }
